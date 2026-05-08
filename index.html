@@ -3,97 +3,1042 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon</title>
+  <meta name="description" content="Alec Bhamani portfolio for AI, data, software projects, and resume highlights.">
+  <title>Alec Bhamani | AI & Software Portfolio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23111814'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial, sans-serif' font-size='24' font-weight='700' fill='%23fbfdfb'%3EAB%3C/text%3E%3C/svg%3E">
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap");
+
     :root {
       color-scheme: light;
-      --bg: #f7f3ec;
-      --ink: #1f2933;
-      --muted: #607080;
-      --accent: #0f766e;
-      --accent-soft: #d8f3ee;
-      --line: #ded6ca;
+      --bg: #eef3ef;
+      --paper: rgba(255, 255, 255, 0.74);
+      --paper-solid: #fbfdfb;
+      --ink: #111814;
+      --muted: #586962;
+      --line: rgba(22, 64, 52, 0.16);
+      --forest: #0f5c4d;
+      --aqua: #2b9d98;
+      --coral: #d85d3f;
+      --gold: #e5b84a;
+      --violet: #6657a6;
+      --shadow: 0 24px 70px rgba(35, 58, 49, 0.14);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
       background: var(--bg);
       color: var(--ink);
-      display: grid;
-      place-items: center;
-      padding: 32px;
+      font-family: "Manrope", "Trebuchet MS", sans-serif;
+      letter-spacing: 0;
     }
 
-    main {
-      width: min(100%, 720px);
-      text-align: center;
-      padding: 48px 24px;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .badge {
-      display: inline-block;
-      margin-bottom: 24px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(40px, 8vw, 76px);
-      line-height: 1;
-      font-weight: 800;
-    }
-
-    p {
-      margin: 24px auto 0;
-      max-width: 560px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    .contact {
-      margin-top: 32px;
-      font-size: 15px;
-      color: var(--ink);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(15, 92, 77, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 92, 77, 0.08) 1px, transparent 1px);
+      background-size: 76px 76px;
+      opacity: 0.38;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 88%);
     }
 
     a {
-      color: var(--accent);
+      color: inherit;
       text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(216, 93, 63, 0.55);
+      outline-offset: 4px;
+    }
+
+    #ai-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(135deg, #edf5ee 0%, #f9fcf9 48%, #e5efed 100%);
+    }
+
+    .site {
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(238, 243, 239, 0.82);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      width: min(1120px, calc(100% - 40px));
+      height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(15, 92, 77, 0.2);
+      border-radius: 50%;
+      background: var(--paper-solid);
+      color: var(--forest);
+      font-size: 0.86rem;
+      box-shadow: 0 10px 26px rgba(35, 58, 49, 0.1);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
       font-weight: 700;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .nav-links a {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: #24342f;
+    }
+
+    .nav-links a:hover {
+      border-color: rgba(15, 92, 77, 0.2);
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .nav-links .github-link {
+      border-color: rgba(15, 92, 77, 0.24);
+      background: #111814;
+      color: #fbfdfb;
+      box-shadow: 0 12px 30px rgba(17, 24, 20, 0.16);
+    }
+
+    .nav-links .github-link:hover {
+      border-color: #111814;
+      background: #20332c;
+    }
+
+    .hero,
+    .section,
+    .footer-inner {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: min(760px, calc(100vh - 72px));
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+      gap: 66px;
+      align-items: center;
+      padding: 72px 0 58px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid rgba(15, 92, 77, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.66);
+      color: var(--forest);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-top: 22px;
+      font-size: 5.1rem;
+      line-height: 0.96;
+    }
+
+    .hero-subhead {
+      max-width: 650px;
+      margin: 20px 0 0;
+      color: #293b35;
+      font-size: 1.2rem;
+      line-height: 1.72;
+    }
+
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 92, 77, 0.26);
+      font-size: 0.95rem;
+      font-weight: 800;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.primary {
+      background: var(--forest);
+      color: #fbfdfb;
+      box-shadow: 0 18px 38px rgba(15, 92, 77, 0.22);
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--ink);
+    }
+
+    .hero-notes {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .note {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid rgba(15, 92, 77, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .portrait-area {
+      position: relative;
+      min-height: 430px;
+      display: grid;
+      place-items: center;
+    }
+
+    .portrait-area::before,
+    .portrait-area::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(15, 92, 77, 0.16);
+      transform: rotate(-8deg);
+    }
+
+    .portrait-area::before {
+      width: 330px;
+      height: 330px;
+      border-radius: 36px;
+    }
+
+    .portrait-area::after {
+      width: 420px;
+      height: 170px;
+      border-radius: 999px;
+      transform: rotate(20deg);
+      border-color: rgba(216, 93, 63, 0.18);
+    }
+
+    .portrait-frame {
+      position: relative;
+      z-index: 2;
+      width: 314px;
+      aspect-ratio: 1;
+      padding: 13px;
+      border-radius: 50%;
+      background: conic-gradient(from 160deg, var(--forest), var(--aqua), var(--gold), var(--coral), var(--forest));
+      box-shadow: var(--shadow);
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: 10px solid #fbfdfb;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #dfe9e3;
+    }
+
+    .portrait-caption {
+      position: absolute;
+      z-index: 3;
+      right: 4px;
+      bottom: 32px;
+      width: min(220px, 58vw);
+      padding: 14px 16px;
+      border: 1px solid rgba(17, 24, 20, 0.1);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 18px 45px rgba(35, 58, 49, 0.15);
+      backdrop-filter: blur(16px);
+      color: #293b35;
+      font-size: 0.88rem;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .section {
+      padding: 90px 0;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr);
+      gap: 34px;
+      margin-bottom: 34px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      color: var(--forest);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: 3.2rem;
+      line-height: 1.02;
+    }
+
+    .section-intro {
+      margin: 16px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.03rem;
+      line-height: 1.75;
+    }
+
+    .resume-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.88fr) minmax(0, 1.12fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .resume-feature,
+    .resume-card,
+    .project-card {
+      border: 1px solid rgba(15, 92, 77, 0.15);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: 0 18px 52px rgba(35, 58, 49, 0.1);
+      backdrop-filter: blur(18px);
+    }
+
+    .resume-feature {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 360px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(239, 246, 241, 0.62));
+    }
+
+    .resume-feature h3,
+    .resume-card h3,
+    .project-card h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.1rem;
+      line-height: 1.35;
+    }
+
+    .resume-feature p,
+    .resume-card p,
+    .project-card p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .resume-feature .status {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 32px;
+      padding: 0 10px;
+      border: 1px solid rgba(216, 93, 63, 0.22);
+      border-radius: 999px;
+      color: #8d321f;
+      background: rgba(255, 240, 232, 0.76);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .placeholder-lines {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .line {
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(15, 92, 77, 0.18), rgba(43, 157, 152, 0.08));
+    }
+
+    .line.short {
+      width: 68%;
+    }
+
+    .line.mid {
+      width: 84%;
+    }
+
+    .resume-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .resume-card {
+      min-height: 170px;
+      padding: 24px;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 310px;
+      padding: 26px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--forest), var(--aqua), var(--gold), var(--coral));
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .project-number {
+      flex: 0 0 auto;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #111814;
+      color: #fbfdfb;
+      font-weight: 800;
+      font-size: 0.88rem;
+    }
+
+    .repo-name {
+      margin-top: 8px;
+      color: var(--forest);
+      font-size: 0.86rem;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border: 1px solid rgba(15, 92, 77, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.66);
+      color: #293b35;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .project-link {
+      width: fit-content;
+      margin-top: auto;
+      padding-top: 24px;
+      color: var(--forest);
+      font-weight: 800;
+    }
+
+    .project-link:hover {
+      color: var(--coral);
+    }
+
+    .next-band {
+      margin-top: 20px;
+      padding: 24px;
+      border: 1px dashed rgba(15, 92, 77, 0.26);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.56);
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    footer {
+      padding: 46px 0 58px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .footer-inner a {
+      color: var(--forest);
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        min-height: auto;
+      }
+
+      .portrait-area {
+        min-height: 370px;
+        grid-row: 1;
+      }
+
+      h1 {
+        font-size: 4rem;
+      }
+
+      .resume-layout,
+      .section-heading {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav,
+      .hero,
+      .section,
+      .footer-inner {
+        width: calc(100% - 28px);
+      }
+
+      .nav-links a:not(.github-link) {
+        display: none;
+      }
+
+      h1 {
+        font-size: 2.9rem;
+      }
+
+      h2 {
+        font-size: 2.3rem;
+      }
+
+      .hero {
+        gap: 22px;
+        padding-top: 32px;
+        padding-bottom: 44px;
+      }
+
+      .section {
+        padding: 28px 0 64px;
+      }
+
+      .section-heading {
+        padding-top: 18px;
+        margin-bottom: 24px;
+      }
+
+      .hero-subhead,
+      .section-intro {
+        font-size: 1rem;
+        line-height: 1.62;
+      }
+
+      .hero-actions {
+        gap: 8px;
+        margin-top: 24px;
+      }
+
+      .button {
+        min-height: 46px;
+        padding: 0 13px;
+        font-size: 0.86rem;
+      }
+
+      .portrait-frame {
+        width: 218px;
+      }
+
+      .portrait-area::before {
+        width: 236px;
+        height: 236px;
+      }
+
+      .portrait-area::after {
+        width: 272px;
+        height: 112px;
+      }
+
+      .portrait-caption {
+        right: auto;
+        bottom: -2px;
+        font-size: 0.82rem;
+        padding: 12px 14px;
+      }
+
+      .portrait-area {
+        min-height: 292px;
+      }
+
+      .hero-notes {
+        display: none;
+      }
+
+      .resume-grid,
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .button:hover {
+        transform: none;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <span class="badge">Website Placeholder</span>
-    <h1>Coming Soon</h1>
-    <p>
-      We are working on something new. Check back soon for updates, details,
-      and everything this site is being built to share.
-    </p>
-    <div class="contact">
-      Questions? Contact me at <a href="mailto:alecbhamani8@gmail.com">alecbhamani8@gmail.com</a>
-    </div>
-  </main>
+  <canvas id="ai-canvas" aria-hidden="true"></canvas>
+  <div class="site">
+    <header class="topbar">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Alec Bhamani home">
+          <span class="brand-mark">AB</span>
+          <span>Alec Bhamani</span>
+        </a>
+        <div class="nav-links">
+          <a href="#resume">Resume</a>
+          <a href="#projects">Projects</a>
+          <a class="github-link" href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <span class="kicker">AI-focused software portfolio</span>
+          <h1 id="hero-title">Alec Bhamani</h1>
+          <p class="hero-subhead">
+            Building practical software at the edge of data, machine learning, and human-centered tools. This portfolio is set up to grow into a polished home for your resume, project case studies, and AI work.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button primary" href="#projects">View coding projects</a>
+            <a class="button secondary" href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">Open GitHub profile</a>
+          </div>
+          <div class="hero-notes" aria-label="Focus areas">
+            <span class="note">Machine learning</span>
+            <span class="note">Data products</span>
+            <span class="note">Full-stack experiments</span>
+          </div>
+        </div>
+
+        <div class="portrait-area" aria-label="Portrait">
+          <div class="portrait-frame">
+            <img src="https://avatars.githubusercontent.com/u/133613229?v=4" alt="Alec Bhamani portrait placeholder">
+          </div>
+          <div class="portrait-caption">Circular photo slot ready for your final headshot.</div>
+        </div>
+      </section>
+
+      <section class="section" id="resume" aria-labelledby="resume-title">
+        <div class="section-heading">
+          <div class="eyebrow">Resume</div>
+          <div>
+            <h2 id="resume-title">A clean structure for the resume you will send next.</h2>
+            <p class="section-intro">
+              This is intentionally ready for your updated resume instead of guessing details. Once you send it over, these blocks can become a tighter career story with real dates, metrics, and achievements.
+            </p>
+          </div>
+        </div>
+
+        <div class="resume-layout">
+          <article class="resume-feature">
+            <div>
+              <span class="status">Waiting on updated resume</span>
+              <h3>Professional snapshot</h3>
+              <p>
+                A short, polished summary will live here: what you are studying or building, the kinds of roles you want, and the AI or software problems you are most excited to work on.
+              </p>
+            </div>
+            <div class="placeholder-lines" aria-hidden="true">
+              <span class="line"></span>
+              <span class="line mid"></span>
+              <span class="line short"></span>
+            </div>
+          </article>
+
+          <div class="resume-grid">
+            <article class="resume-card">
+              <h3>Education</h3>
+              <p>School, degree, graduation date, coursework, honors, and academic focus areas.</p>
+            </article>
+            <article class="resume-card">
+              <h3>Experience</h3>
+              <p>Roles, organizations, dates, responsibilities, and impact points written in resume-ready language.</p>
+            </article>
+            <article class="resume-card">
+              <h3>Technical skills</h3>
+              <p>Programming languages, AI and ML tools, data workflows, frameworks, and developer tools.</p>
+            </article>
+            <article class="resume-card">
+              <h3>Leadership and wins</h3>
+              <p>Hackathons, certifications, clubs, awards, volunteering, and other signal worth highlighting.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects" aria-labelledby="projects-title">
+        <div class="section-heading">
+          <div class="eyebrow">Projects</div>
+          <div>
+            <h2 id="projects-title">Coding work pulled from your public GitHub.</h2>
+            <p class="section-intro">
+              I started with the public repositories currently visible on your GitHub profile. We can turn any of these into deeper case studies with screenshots, problem statements, your role, and outcomes.
+            </p>
+          </div>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <h3>Logistic Regression ML Project</h3>
+                <div class="repo-name">Machine-Project-Logisitic-Regression</div>
+              </div>
+              <span class="project-number">01</span>
+            </div>
+            <p>
+              Machine learning project that splits data, trains a logistic regression model, and targets accuracy above 75 percent.
+            </p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Machine learning</span>
+              <span class="tag">Logistic regression</span>
+            </div>
+            <a class="project-link" href="https://github.com/AlecBhamani1/Machine-Project-Logisitic-Regression" target="_blank" rel="noreferrer">View repository</a>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <h3>Weather App</h3>
+                <div class="repo-name">python-weather</div>
+              </div>
+              <span class="project-number">02</span>
+            </div>
+            <p>
+              Flask weather application for city search, current conditions, humidity, wind speed, and short-term forecasts through OpenWeatherMap.
+            </p>
+            <div class="tags">
+              <span class="tag">Flask</span>
+              <span class="tag">HTML/CSS/JS</span>
+              <span class="tag">API integration</span>
+            </div>
+            <a class="project-link" href="https://github.com/AlecBhamani1/python-weather" target="_blank" rel="noreferrer">View repository</a>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <h3>MadData 2025 Hackathon</h3>
+                <div class="repo-name">MadData2025</div>
+              </div>
+              <span class="project-number">03</span>
+            </div>
+            <p>
+              Hackathon project repository for MadData2025. This card is ready for the problem, dataset, role, and result once you want to expand it.
+            </p>
+            <div class="tags">
+              <span class="tag">Hackathon</span>
+              <span class="tag">Data</span>
+              <span class="tag">Team project</span>
+            </div>
+            <a class="project-link" href="https://github.com/AlecBhamani1/MadData2025" target="_blank" rel="noreferrer">View repository</a>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <h3>Minecraft Forge Content Mod</h3>
+                <div class="repo-name">naruto_mod</div>
+              </div>
+              <span class="project-number">04</span>
+            </div>
+            <p>
+              Public Minecraft Forge 1.12.2 content mod with a Naruto-inspired feature set, useful for showing game modding and large codebase exploration.
+            </p>
+            <div class="tags">
+              <span class="tag">Minecraft Forge</span>
+              <span class="tag">Game modding</span>
+              <span class="tag">Forked repo</span>
+            </div>
+            <a class="project-link" href="https://github.com/AlecBhamani1/naruto_mod" target="_blank" rel="noreferrer">View repository</a>
+          </article>
+        </div>
+
+        <div class="next-band">
+          Next iteration: add your resume details, swap in your preferred headshot, and choose which projects deserve full writeups with screenshots and outcomes.
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <span>Alec Bhamani | AI, data, and software portfolio</span>
+        <a href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">github.com/AlecBhamani1</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("ai-canvas");
+    const ctx = canvas.getContext("2d");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let width = 0;
+    let height = 0;
+    let nodes = [];
+    let streams = [];
+    let animationFrame = 0;
+
+    const palette = [
+      "rgba(15, 92, 77, 0.8)",
+      "rgba(43, 157, 152, 0.72)",
+      "rgba(216, 93, 63, 0.62)",
+      "rgba(102, 87, 166, 0.52)"
+    ];
+
+    function randomBetween(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    function resizeCanvas() {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * ratio);
+      canvas.height = Math.floor(height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      const nodeCount = Math.min(90, Math.max(36, Math.floor((width * height) / 18000)));
+      nodes = Array.from({ length: nodeCount }, (_, index) => ({
+        x: randomBetween(-40, width + 40),
+        y: randomBetween(-40, height + 40),
+        vx: randomBetween(-0.18, 0.18),
+        vy: randomBetween(-0.14, 0.14),
+        radius: randomBetween(1.4, 3.8),
+        color: palette[index % palette.length]
+      }));
+
+      const streamCount = Math.min(9, Math.max(5, Math.floor(width / 180)));
+      streams = Array.from({ length: streamCount }, (_, index) => ({
+        y: ((index + 1) / (streamCount + 1)) * height,
+        speed: randomBetween(0.035, 0.075),
+        offset: Math.random(),
+        sway: randomBetween(18, 48),
+        label: index % 3 === 0 ? "AI" : index % 2 === 0 ? "01" : "10",
+        color: palette[index % palette.length]
+      }));
+    }
+
+    function wrapNode(node) {
+      if (node.x < -80) node.x = width + 80;
+      if (node.x > width + 80) node.x = -80;
+      if (node.y < -80) node.y = height + 80;
+      if (node.y > height + 80) node.y = -80;
+    }
+
+    function drawBackground(time) {
+      ctx.clearRect(0, 0, width, height);
+      const seconds = time * 0.001;
+
+      ctx.save();
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 6; i += 1) {
+        const y = ((i + 1) / 7) * height + Math.sin(seconds * 0.35 + i) * 18;
+        ctx.beginPath();
+        ctx.moveTo(-40, y);
+        ctx.bezierCurveTo(width * 0.28, y - 70, width * 0.55, y + 86, width + 40, y - 20);
+        ctx.strokeStyle = i % 2 === 0 ? "rgba(15, 92, 77, 0.08)" : "rgba(216, 93, 63, 0.07)";
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      streams.forEach((stream, index) => {
+        const progress = reducedMotion.matches ? stream.offset : (seconds * stream.speed + stream.offset) % 1;
+        const x = progress * (width + 240) - 120;
+        const y = stream.y + Math.sin(seconds * 0.7 + index) * stream.sway;
+
+        ctx.save();
+        ctx.strokeStyle = stream.color.replace("0.", "0.16").replace("0.8", "0.16");
+        ctx.lineWidth = 1.3;
+        ctx.beginPath();
+        ctx.moveTo(x - 150, y);
+        ctx.lineTo(x + 16, y);
+        ctx.stroke();
+
+        ctx.fillStyle = stream.color;
+        ctx.fillRect(x, y - 3, 18, 6);
+        ctx.font = "700 10px Manrope, sans-serif";
+        ctx.fillText(stream.label, x + 24, y + 4);
+        ctx.restore();
+      });
+
+      nodes.forEach((node) => {
+        if (!reducedMotion.matches) {
+          node.x += node.vx;
+          node.y += node.vy;
+          wrapNode(node);
+        }
+      });
+
+      for (let i = 0; i < nodes.length; i += 1) {
+        for (let j = i + 1; j < nodes.length; j += 1) {
+          const first = nodes[i];
+          const second = nodes[j];
+          const dx = first.x - second.x;
+          const dy = first.y - second.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 142) {
+            const opacity = (1 - distance / 142) * 0.18;
+            ctx.strokeStyle = `rgba(15, 92, 77, ${opacity})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(first.x, first.y);
+            ctx.lineTo(second.x, second.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      nodes.forEach((node) => {
+        ctx.beginPath();
+        ctx.fillStyle = node.color;
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function loop(time) {
+      drawBackground(time);
+      if (!reducedMotion.matches) {
+        animationFrame = requestAnimationFrame(loop);
+      }
+    }
+
+    function restartAnimation() {
+      cancelAnimationFrame(animationFrame);
+      resizeCanvas();
+      animationFrame = requestAnimationFrame(loop);
+    }
+
+    window.addEventListener("resize", restartAnimation);
+    reducedMotion.addEventListener("change", restartAnimation);
+    restartAnimation();
+  </script>
 </body>
 </html>
