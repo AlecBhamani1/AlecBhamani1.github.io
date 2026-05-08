@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f3ec;
+      --ink: #1f2933;
+      --muted: #607080;
+      --accent: #0f766e;
+      --accent-soft: #d8f3ee;
+      --line: #ded6ca;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      padding: 32px;
+    }
+
+    main {
+      width: min(100%, 720px);
+      text-align: center;
+      padding: 48px 24px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 24px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(40px, 8vw, 76px);
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    p {
+      margin: 24px auto 0;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .contact {
+      margin-top: 32px;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="badge">Website Placeholder</span>
+    <h1>Coming Soon</h1>
+    <p>
+      We are working on something new. Check back soon for updates, details,
+      and everything this site is being built to share.
+    </p>
+    <div class="contact">
+      Questions? Contact us at <a href="mailto:hello@example.com">hello@example.com</a>
+    </div>
+  </main>
+</body>
+</html>
