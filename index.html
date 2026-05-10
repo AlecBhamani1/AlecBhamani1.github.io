@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Alec Bhamani portfolio for AI, data, software projects, and resume highlights.">
-  <title>Alec Bhamani | AI & Software Portfolio</title>
+  <title>Alec Bhamani | AI &amp; Software Portfolio</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23111814'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial, sans-serif' font-size='24' font-weight='700' fill='%23fbfdfb'%3EAB%3C/text%3E%3C/svg%3E">
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap");
@@ -312,6 +312,7 @@
       border: 10px solid #fbfdfb;
       border-radius: 50%;
       object-fit: cover;
+      object-position: center 36%;
       background: #dfe9e3;
     }
 
@@ -423,26 +424,6 @@
       font-weight: 800;
     }
 
-    .placeholder-lines {
-      display: grid;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .line {
-      height: 10px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(15, 92, 77, 0.18), rgba(43, 157, 152, 0.08));
-    }
-
-    .line.short {
-      width: 68%;
-    }
-
-    .line.mid {
-      width: 84%;
-    }
-
     .resume-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -452,6 +433,67 @@
     .resume-card {
       min-height: 170px;
       padding: 24px;
+    }
+
+    .contact-list,
+    .resume-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .contact-link,
+    .resume-link {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid rgba(15, 92, 77, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--forest);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .contact-link:hover,
+    .resume-link:hover {
+      color: var(--coral);
+      border-color: rgba(216, 93, 63, 0.28);
+    }
+
+    .experience-list {
+      margin-top: 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .experience-item {
+      padding: 22px 0 22px 24px;
+      border-left: 3px solid rgba(15, 92, 77, 0.74);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0));
+    }
+
+    .experience-item h3 {
+      margin: 0;
+      font-size: 1.04rem;
+      line-height: 1.35;
+    }
+
+    .experience-meta {
+      margin-top: 8px;
+      color: var(--forest);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .experience-item p {
+      max-width: 900px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
     }
 
     .project-grid {
@@ -475,6 +517,13 @@
       inset: 0 0 auto 0;
       height: 5px;
       background: linear-gradient(90deg, var(--forest), var(--aqua), var(--gold), var(--coral));
+    }
+
+    .project-card.featured {
+      grid-column: 1 / -1;
+      min-height: auto;
+      background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.86), rgba(240, 248, 243, 0.72));
     }
 
     .project-top {
@@ -711,6 +760,7 @@
         <div class="nav-links">
           <a href="#resume">Resume</a>
           <a href="#projects">Projects</a>
+          <a href="https://www.linkedin.com/in/alec-bhamani-528b13361/" target="_blank" rel="noreferrer">LinkedIn</a>
           <a class="github-link" href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
@@ -719,27 +769,27 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <span class="kicker">AI-focused software portfolio</span>
+          <span class="kicker">Data Science Undergraduate | UW-Madison</span>
           <h1 id="hero-title">Alec Bhamani</h1>
           <p class="hero-subhead">
-            Building practical software at the edge of data, machine learning, and human-centered tools. This portfolio is set up to grow into a polished home for your resume, project case studies, and AI work.
+            Data science student focused on operations strategy, data analytics, and AI prediction models. I build practical machine learning and automation workflows that turn messy data into clearer decisions.
           </p>
           <div class="hero-actions" aria-label="Primary actions">
             <a class="button primary" href="#projects">View coding projects</a>
-            <a class="button secondary" href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">Open GitHub profile</a>
+            <a class="button secondary" href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noreferrer">Download resume</a>
           </div>
           <div class="hero-notes" aria-label="Focus areas">
-            <span class="note">Machine learning</span>
-            <span class="note">Data products</span>
-            <span class="note">Full-stack experiments</span>
+            <span class="note">AI prediction models</span>
+            <span class="note">Statistical analysis</span>
+            <span class="note">Automation strategy</span>
           </div>
         </div>
 
         <div class="portrait-area" aria-label="Portrait">
           <div class="portrait-frame">
-            <img src="https://avatars.githubusercontent.com/u/133613229?v=4" alt="Alec Bhamani portrait placeholder">
+            <img src="assets/alec-bhamani-photo.jpg" alt="Alec Bhamani headshot">
           </div>
-          <div class="portrait-caption">Circular photo slot ready for your final headshot.</div>
+          <div class="portrait-caption">Data science, AI models, and operations analytics.</div>
         </div>
       </section>
 
@@ -747,9 +797,9 @@
         <div class="section-heading">
           <div class="eyebrow">Resume</div>
           <div>
-            <h2 id="resume-title">A clean structure for the resume you will send next.</h2>
+            <h2 id="resume-title">Data science, leadership, and AI-enabled operations work.</h2>
             <p class="section-intro">
-              This is intentionally ready for your updated resume instead of guessing details. Once you send it over, these blocks can become a tighter career story with real dates, metrics, and achievements.
+              A dedicated Data Science major at the University of Wisconsin-Madison with a technical foundation in statistical analysis, machine learning algorithms, and software development, plus more than five years of work experience in fast-paced team environments.
             </p>
           </div>
         </div>
@@ -757,37 +807,60 @@
         <div class="resume-layout">
           <article class="resume-feature">
             <div>
-              <span class="status">Waiting on updated resume</span>
+              <span class="status">Open to data science opportunities</span>
               <h3>Professional snapshot</h3>
               <p>
-                A short, polished summary will live here: what you are studying or building, the kinds of roles you want, and the AI or software problems you are most excited to work on.
+                I combine coursework in probability, computer science, and machine learning with hands-on operational leadership. My strongest lane is using data analysis, AI tools, and automation to improve workflows and make teams more effective.
               </p>
+              <div class="contact-list" aria-label="Contact links">
+                <a class="contact-link" href="mailto:alecbhamani8@gmail.com">Email</a>
+                <a class="contact-link" href="tel:+13252487320">325.248.7320</a>
+                <a class="contact-link" href="https://www.linkedin.com/in/alec-bhamani-528b13361/" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="contact-link" href="https://alecbhamani.com/" target="_blank" rel="noreferrer">Website</a>
+              </div>
             </div>
-            <div class="placeholder-lines" aria-hidden="true">
-              <span class="line"></span>
-              <span class="line mid"></span>
-              <span class="line short"></span>
+            <div class="resume-links">
+              <a class="resume-link" href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noreferrer">View resume PDF</a>
+              <a class="resume-link" href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">GitHub profile</a>
             </div>
           </article>
 
           <div class="resume-grid">
             <article class="resume-card">
               <h3>Education</h3>
-              <p>School, degree, graduation date, coursework, honors, and academic focus areas.</p>
+              <p>Bachelor of Science in Data Science at the University of Wisconsin-Madison. Expected graduation: May 2028.</p>
             </article>
             <article class="resume-card">
-              <h3>Experience</h3>
-              <p>Roles, organizations, dates, responsibilities, and impact points written in resume-ready language.</p>
+              <h3>Current role</h3>
+              <p>Associate Consultant at Krahnborn, contributing to data-driven solutions, automation strategies, and more accurate client deliverables.</p>
             </article>
             <article class="resume-card">
               <h3>Technical skills</h3>
-              <p>Programming languages, AI and ML tools, data workflows, frameworks, and developer tools.</p>
+              <p>Python, NumPy, Pandas, Flask, R, Java, statistical analysis, linear algebra, regression models, clustering algorithms, and machine learning models.</p>
             </article>
             <article class="resume-card">
-              <h3>Leadership and wins</h3>
-              <p>Hackathons, certifications, clubs, awards, volunteering, and other signal worth highlighting.</p>
+              <h3>Leadership strengths</h3>
+              <p>Operational workflows, team leadership, mentoring, customer service, professional AI leveraging, and cross-functional collaboration.</p>
             </article>
           </div>
+        </div>
+
+        <div class="experience-list" aria-label="Resume experience">
+          <article class="experience-item">
+            <h3>Krahnborn | Associate Consultant</h3>
+            <div class="experience-meta">Madison, Wisconsin | January 2025 - Present</div>
+            <p>Contribute to data-driven solutions and automation strategies in a consulting environment. Leverage AI tools, machine learning frameworks, LLM prompting, and data analysis techniques to reduce manual overhead and improve decision-making processes.</p>
+          </article>
+          <article class="experience-item">
+            <h3>Wisconsin Union | Bar Manager and Catering Staff</h3>
+            <div class="experience-meta">Madison, Wisconsin | January 2024 - January 2025</div>
+            <p>Promoted to Bar Manager after demonstrating reliability and leadership excellence. Led staff coordination for high-volume university venues and helped maintain smooth service during peak hours and events.</p>
+          </article>
+          <article class="experience-item">
+            <h3>Blue Lynk, LLC | Jr. Project Engineer</h3>
+            <div class="experience-meta">Austin, Texas | January 2020 - October 2022</div>
+            <p>Delivered interactive digital document products for public and private clients. Closed 20+ projects with a 100% customer satisfaction rate while meeting strict cloud-based quality standards.</p>
+          </article>
         </div>
       </section>
 
@@ -795,21 +868,41 @@
         <div class="section-heading">
           <div class="eyebrow">Projects</div>
           <div>
-            <h2 id="projects-title">Coding work pulled from your public GitHub.</h2>
+            <h2 id="projects-title">Prediction models, web apps, and public GitHub work.</h2>
             <p class="section-intro">
-              I started with the public repositories currently visible on your GitHub profile. We can turn any of these into deeper case studies with screenshots, problem statements, your role, and outcomes.
+              This section now blends your resume's featured technical project with repositories from your public GitHub profile. The next polish pass can turn the strongest entries into full case studies with screenshots and outcomes.
             </p>
           </div>
         </div>
 
         <div class="project-grid">
+          <article class="project-card featured">
+            <div class="project-top">
+              <div>
+                <h3>Crystal Farms &amp; Cub Foods Prediction Model</h3>
+                <div class="repo-name">1st Place Winner | UW-Madison Tech Exploration Lab</div>
+              </div>
+              <span class="project-number">01</span>
+            </div>
+            <p>
+              Collaborated with a team of four to engineer a Python-based machine learning model that analyzed historical sales data and predicted promotional windows where discounts would maximize profitability.
+            </p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Predictive modeling</span>
+              <span class="tag">Sales analytics</span>
+              <span class="tag">1st place</span>
+            </div>
+            <a class="project-link" href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noreferrer">View resume highlight</a>
+          </article>
+
           <article class="project-card">
             <div class="project-top">
               <div>
                 <h3>Logistic Regression ML Project</h3>
                 <div class="repo-name">Machine-Project-Logisitic-Regression</div>
               </div>
-              <span class="project-number">01</span>
+              <span class="project-number">02</span>
             </div>
             <p>
               Machine learning project that splits data, trains a logistic regression model, and targets accuracy above 75 percent.
@@ -828,7 +921,7 @@
                 <h3>Weather App</h3>
                 <div class="repo-name">python-weather</div>
               </div>
-              <span class="project-number">02</span>
+              <span class="project-number">03</span>
             </div>
             <p>
               Flask weather application for city search, current conditions, humidity, wind speed, and short-term forecasts through OpenWeatherMap.
@@ -847,7 +940,7 @@
                 <h3>MadData 2025 Hackathon</h3>
                 <div class="repo-name">MadData2025</div>
               </div>
-              <span class="project-number">03</span>
+              <span class="project-number">04</span>
             </div>
             <p>
               Hackathon project repository for MadData2025. This card is ready for the problem, dataset, role, and result once you want to expand it.
@@ -866,7 +959,7 @@
                 <h3>Minecraft Forge Content Mod</h3>
                 <div class="repo-name">naruto_mod</div>
               </div>
-              <span class="project-number">04</span>
+              <span class="project-number">05</span>
             </div>
             <p>
               Public Minecraft Forge 1.12.2 content mod with a Naruto-inspired feature set, useful for showing game modding and large codebase exploration.
@@ -881,15 +974,15 @@
         </div>
 
         <div class="next-band">
-          Next iteration: add your resume details, swap in your preferred headshot, and choose which projects deserve full writeups with screenshots and outcomes.
+          Next iteration: add project screenshots, tighten the case study language, and decide whether the public phone number should stay on the live site.
         </div>
       </section>
     </main>
 
     <footer>
       <div class="footer-inner">
-        <span>Alec Bhamani | AI, data, and software portfolio</span>
-        <a href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">github.com/AlecBhamani1</a>
+        <span>Alec Bhamani | Data science, AI prediction models, and analytics</span>
+        <a href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noreferrer">Download resume</a>
       </div>
     </footer>
   </div>
