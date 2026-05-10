@@ -12,7 +12,7 @@
     :root {
       color-scheme: light;
       --bg: #eef3ef;
-      --paper: rgba(255, 255, 255, 0.74);
+      --paper: rgba(255, 255, 255, 0.9);
       --paper-solid: #fbfdfb;
       --ink: #111814;
       --muted: #586962;
@@ -336,18 +336,36 @@
 
     .section {
       padding: 90px 0;
+      scroll-margin-top: 92px;
     }
 
     .section-heading {
-      display: grid;
-      grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr);
-      gap: 34px;
-      margin-bottom: 34px;
+      position: relative;
+      isolation: isolate;
+      max-width: 920px;
+      margin: 0 0 36px;
       padding-top: 32px;
       border-top: 1px solid var(--line);
     }
 
+    .section-heading::before {
+      content: "";
+      position: absolute;
+      inset: 20px -26px -18px;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 34% 46%, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.58) 48%, rgba(255, 255, 255, 0) 76%);
+    }
+
     .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      margin-bottom: 14px;
+      padding: 0 11px;
+      border: 1px solid rgba(15, 92, 77, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
       color: var(--forest);
       font-size: 0.84rem;
       font-weight: 800;
@@ -379,7 +397,7 @@
       border: 1px solid rgba(15, 92, 77, 0.15);
       border-radius: 8px;
       background: var(--paper);
-      box-shadow: 0 18px 52px rgba(35, 58, 49, 0.1);
+      box-shadow: 0 18px 52px rgba(35, 58, 49, 0.12);
       backdrop-filter: blur(18px);
     }
 
@@ -390,7 +408,7 @@
       justify-content: space-between;
       min-height: 360px;
       background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(239, 246, 241, 0.62));
+        linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(243, 249, 245, 0.9));
     }
 
     .resume-feature h3,
@@ -586,16 +604,6 @@
       color: var(--coral);
     }
 
-    .next-band {
-      margin-top: 20px;
-      padding: 24px;
-      border: 1px dashed rgba(15, 92, 77, 0.26);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.56);
-      color: var(--muted);
-      line-height: 1.72;
-    }
-
     footer {
       padding: 46px 0 58px;
       border-top: 1px solid var(--line);
@@ -631,8 +639,7 @@
         font-size: 4rem;
       }
 
-      .resume-layout,
-      .section-heading {
+      .resume-layout {
         grid-template-columns: 1fr;
       }
     }
@@ -670,6 +677,10 @@
       .section-heading {
         padding-top: 18px;
         margin-bottom: 24px;
+      }
+
+      .section-heading::before {
+        inset: 12px 0 -12px;
       }
 
       .hero-subhead,
@@ -726,6 +737,11 @@
       .footer-inner {
         align-items: flex-start;
         flex-direction: column;
+      }
+
+      .contact-link,
+      .resume-link {
+        flex: 1 1 calc(50% - 5px);
       }
     }
 
@@ -973,9 +989,6 @@
           </article>
         </div>
 
-        <div class="next-band">
-          Next iteration: add project screenshots, tighten the case study language, and decide whether the public phone number should stay on the live site.
-        </div>
       </section>
     </main>
 
@@ -1033,7 +1046,6 @@
         speed: randomBetween(0.035, 0.075),
         offset: Math.random(),
         sway: randomBetween(18, 48),
-        label: index % 3 === 0 ? "AI" : index % 2 === 0 ? "01" : "10",
         color: palette[index % palette.length]
       }));
     }
@@ -1067,17 +1079,15 @@
         const y = stream.y + Math.sin(seconds * 0.7 + index) * stream.sway;
 
         ctx.save();
-        ctx.strokeStyle = stream.color.replace("0.", "0.16").replace("0.8", "0.16");
-        ctx.lineWidth = 1.3;
+        ctx.strokeStyle = stream.color.replace("0.", "0.1").replace("0.8", "0.1");
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(x - 150, y);
         ctx.lineTo(x + 16, y);
         ctx.stroke();
 
-        ctx.fillStyle = stream.color;
-        ctx.fillRect(x, y - 3, 18, 6);
-        ctx.font = "700 10px Manrope, sans-serif";
-        ctx.fillText(stream.label, x + 24, y + 4);
+        ctx.fillStyle = stream.color.replace("0.", "0.62").replace("0.8", "0.62");
+        ctx.fillRect(x, y - 2, 16, 4);
         ctx.restore();
       });
 
@@ -1097,7 +1107,7 @@
           const dy = first.y - second.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < 142) {
-            const opacity = (1 - distance / 142) * 0.18;
+            const opacity = (1 - distance / 142) * 0.12;
             ctx.strokeStyle = `rgba(15, 92, 77, ${opacity})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -1110,7 +1120,7 @@
 
       nodes.forEach((node) => {
         ctx.beginPath();
-        ctx.fillStyle = node.color;
+        ctx.fillStyle = node.color.replace("0.", "0.68").replace("0.8", "0.68");
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
         ctx.fill();
       });
