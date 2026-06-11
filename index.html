@@ -15,7 +15,7 @@
       --paper: rgba(255, 255, 255, 0.05);
       --paper-solid: #0f141a;
       --ink: #eef3f1;
-      --muted: #9fada8;
+      --muted: #cdd8d3;
       --line: rgba(255, 255, 255, 0.12);
       --amber: #e9a23f;
       --forest: #38b89a;
@@ -102,28 +102,8 @@
       margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 18px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-    }
-
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--amber);
-      font-size: 0.86rem;
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
     }
 
     .nav-links {
@@ -210,7 +190,7 @@
     .hero-subhead {
       max-width: 650px;
       margin: 20px 0 0;
-      color: #c4d0cb;
+      color: #e3ebe7;
       font-size: 1.2rem;
       line-height: 1.72;
     }
@@ -784,10 +764,6 @@
   <div class="site">
     <header class="topbar">
       <nav class="nav" aria-label="Primary navigation">
-        <a class="brand" href="#top" aria-label="Alec Bhamani home">
-          <span class="brand-mark">AB</span>
-          <span>Alec Bhamani</span>
-        </a>
         <div class="nav-links">
           <a href="#resume">Resume</a>
           <a href="#projects">Projects</a>
@@ -1049,7 +1025,7 @@
       let geoFill = null, geoCoast = null, geoBorders = null, graticule = null;
       let ready = false;
       let cityState = [];
-      let arcs = [];
+      let travelers = [];
       let sparks = [];
       let animationFrame = 0;
       let lastTime = null;
@@ -1058,8 +1034,8 @@
 
       function buildExtras() {
         cityState = CITIES.map(function () { return { tw: Math.random() * Math.PI * 2 }; });
-        arcs = [];
-        for (let i = 0; i < 9; i += 1) arcs.push(spawnArc(i * 360));
+        travelers = [];
+        for (let i = 0; i < 8; i += 1) travelers.push(makeTraveler(i * 420));
         sparks = [];
         for (let i = 0; i < 16; i += 1) {
           sparks.push({
@@ -1071,11 +1047,37 @@
         }
       }
 
-      function spawnArc(delay) {
-        const a = (Math.random() * CITIES.length) | 0;
-        let b = (Math.random() * CITIES.length) | 0;
-        if (b === a) b = (b + 1) % CITIES.length;
-        return { a, b, born: -delay, dur: randomBetween(2800, 4600) };
+      // Angular length of a hop, in radians (0..PI) — used to pace each hop.
+      function geoDist(a, b) {
+        return (typeof d3 !== "undefined" && d3.geoDistance) ? d3.geoDistance(a, b) : 1;
+      }
+
+      // A traveler never disappears: it rides one arc, then bounces on to the
+      // next city, hop after hop. Longer hops take a little longer to cross.
+      function hopDur(a, b) {
+        return 1500 + (geoDist(CITIES[a], CITIES[b]) / Math.PI) * 2400;
+      }
+
+      function makeTraveler(delay) {
+        const from = (Math.random() * CITIES.length) | 0;
+        let to = (Math.random() * CITIES.length) | 0;
+        if (to === from) to = (to + 1) % CITIES.length;
+        return { from: from, to: to, start: -delay, dur: hopDur(from, to),
+                 prevFrom: -1, prevTo: -1, prevEnd: -1e9 };
+      }
+
+      // Pick the next stop, preferring cities on the near side of the globe so
+      // the connection keeps bouncing across what the viewer can actually see.
+      function pickNext(from, center) {
+        const visible = [];
+        for (let i = 0; i < CITIES.length; i += 1) {
+          if (i === from) continue;
+          if (Math.cos(geoDist(CITIES[i], center)) > 0.12) visible.push(i);
+        }
+        const pool = visible.length ? visible : CITIES.map(function (_, i) { return i; });
+        let next = pool[(Math.random() * pool.length) | 0];
+        if (next === from) next = (from + 1) % CITIES.length;
+        return next;
       }
 
       function resizeCanvas() {
@@ -1103,6 +1105,43 @@
           x: m * m * p0[0] + 2 * m * u * cxp + u * u * p1[0],
           y: m * m * p0[1] + 2 * m * u * cyp + u * u * p1[1]
         };
+      }
+
+      // Draw one connection arc (lifting off the surface). When withPacket is
+      // true, a glowing packet rides along it at position t (0..1). The arc
+      // stays lit for the whole hop and only dims as an endpoint nears the limb.
+      function drawArc(ai, bi, center, t, intensity, withPacket) {
+        const ca = CITIES[ai], cb = CITIES[bi];
+        const fa = Math.cos(d3.geoDistance(ca, center));
+        const fb = Math.cos(d3.geoDistance(cb, center));
+        if (fa <= 0.02 || fb <= 0.02) return;
+
+        const pa = projection(ca), pb = projection(cb);
+        const mx = (pa[0] + pb[0]) / 2, my = (pa[1] + pb[1]) / 2;
+        const ddx = mx - cx, ddy = my - cy;
+        const lift = 1 + 0.22 + Math.hypot(pa[0] - pb[0], pa[1] - pb[1]) / (R * 7);
+        const ctrlX = cx + ddx * lift, ctrlY = cy + ddy * lift;
+        const fade = Math.min(1, fa / 0.18) * Math.min(1, fb / 0.18) * intensity;
+
+        ctx.strokeStyle = "rgba(243, 158, 80, " + (0.34 * fade) + ")";
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(pa[0], pa[1]);
+        ctx.quadraticCurveTo(ctrlX, ctrlY, pb[0], pb[1]);
+        ctx.stroke();
+
+        if (!withPacket) return;
+
+        const head = quad(pa, pb, ctrlX, ctrlY, t);
+        const tail = quad(pa, pb, ctrlX, ctrlY, Math.max(0, t - 0.12));
+        const grad = ctx.createLinearGradient(tail.x, tail.y, head.x, head.y);
+        grad.addColorStop(0, "rgba(255, 190, 100, 0)");
+        grad.addColorStop(1, "rgba(255, 214, 150, " + (0.95 * fade) + ")");
+        ctx.strokeStyle = grad; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(tail.x, tail.y); ctx.lineTo(head.x, head.y); ctx.stroke();
+
+        ctx.fillStyle = "rgba(255, 226, 170, " + fade + ")";
+        ctx.beginPath(); ctx.arc(head.x, head.y, 2.2, 0, Math.PI * 2); ctx.fill();
       }
 
       function drawGlobe(elapsed) {
@@ -1180,44 +1219,33 @@
             ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.6, 0, Math.PI * 2); ctx.fill();
           }
 
-          // Connection arcs that lift off the surface, with a traveling packet.
-          for (let i = 0; i < arcs.length; i += 1) {
-            const arc = arcs[i];
-            const age = elapsed - arc.born;
-            if (age < 0) continue;
-            const t = age / arc.dur;
-            if (t >= 1) { arcs[i] = spawnArc(0); continue; }
+          // Connections that keep bouncing place to place — each traveler rides
+          // an arc, then hops on to the next city without ever vanishing.
+          for (let i = 0; i < travelers.length; i += 1) {
+            const tr = travelers[i];
+            let t = (elapsed - tr.start) / tr.dur;
 
-            const ca = CITIES[arc.a], cb = CITIES[arc.b];
-            const fa = Math.cos(d3.geoDistance(ca, center));
-            const fb = Math.cos(d3.geoDistance(cb, center));
-            if (fa <= 0.02 || fb <= 0.02) continue;
+            // Advance through any hops that completed since the last frame.
+            let guard = 0;
+            while (t >= 1 && guard < 6) {
+              tr.prevFrom = tr.from; tr.prevTo = tr.to; tr.prevEnd = tr.start + tr.dur;
+              tr.from = tr.to;
+              tr.to = pickNext(tr.from, center);
+              tr.start += tr.dur;
+              tr.dur = hopDur(tr.from, tr.to);
+              t = (elapsed - tr.start) / tr.dur;
+              guard += 1;
+            }
+            if (t >= 1) { tr.start = elapsed; t = 0; }  // resync after a long pause
+            if (t < 0) continue;                        // still in its start delay
 
-            const pa = projection(ca), pb = projection(cb);
-            const mx = (pa[0] + pb[0]) / 2, my = (pa[1] + pb[1]) / 2;
-            const ddx = mx - cx, ddy = my - cy;
-            const lift = 1 + 0.22 + Math.hypot(pa[0] - pb[0], pa[1] - pb[1]) / (R * 7);
-            const ctrlX = cx + ddx * lift, ctrlY = cy + ddy * lift;
-            const fade = Math.min(1, t / 0.16) * Math.min(1, (1 - t) / 0.24)
-              * Math.min(1, fa / 0.2) * Math.min(1, fb / 0.2);
+            // Brief afterglow of the hop just finished, so the path feels linked.
+            const since = elapsed - tr.prevEnd;
+            if (tr.prevFrom >= 0 && since < 520) {
+              drawArc(tr.prevFrom, tr.prevTo, center, 1, (1 - since / 520) * 0.5, false);
+            }
 
-            ctx.strokeStyle = "rgba(243, 158, 80, " + (0.4 * fade) + ")";
-            ctx.lineWidth = 1.1;
-            ctx.beginPath();
-            ctx.moveTo(pa[0], pa[1]);
-            ctx.quadraticCurveTo(ctrlX, ctrlY, pb[0], pb[1]);
-            ctx.stroke();
-
-            const head = quad(pa, pb, ctrlX, ctrlY, t);
-            const tail = quad(pa, pb, ctrlX, ctrlY, Math.max(0, t - 0.12));
-            const grad = ctx.createLinearGradient(tail.x, tail.y, head.x, head.y);
-            grad.addColorStop(0, "rgba(255, 190, 100, 0)");
-            grad.addColorStop(1, "rgba(255, 214, 150, " + (0.95 * fade) + ")");
-            ctx.strokeStyle = grad; ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.moveTo(tail.x, tail.y); ctx.lineTo(head.x, head.y); ctx.stroke();
-
-            ctx.fillStyle = "rgba(255, 226, 170, " + fade + ")";
-            ctx.beginPath(); ctx.arc(head.x, head.y, 2.1, 0, Math.PI * 2); ctx.fill();
+            drawArc(tr.from, tr.to, center, t, 1, true);
           }
         }
 
