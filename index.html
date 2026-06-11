@@ -5,24 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Alec Bhamani portfolio for AI, data, software projects, and resume highlights.">
   <title>Alec Bhamani | AI &amp; Software Portfolio</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23111814'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial, sans-serif' font-size='24' font-weight='700' fill='%23fbfdfb'%3EAB%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23070a0c'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial, sans-serif' font-size='24' font-weight='700' fill='%23e9a23f'%3EAB%3C/text%3E%3C/svg%3E">
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap");
 
     :root {
-      color-scheme: light;
-      --bg: #eef3ef;
-      --paper: rgba(255, 255, 255, 0.9);
-      --paper-solid: #fbfdfb;
-      --ink: #111814;
-      --muted: #586962;
-      --line: rgba(22, 64, 52, 0.16);
-      --forest: #0f5c4d;
-      --aqua: #2b9d98;
-      --coral: #d85d3f;
-      --gold: #e5b84a;
-      --violet: #6657a6;
-      --shadow: 0 24px 70px rgba(35, 58, 49, 0.14);
+      color-scheme: dark;
+      --bg: #07090b;
+      --paper: rgba(255, 255, 255, 0.05);
+      --paper-solid: #0f141a;
+      --ink: #eef3f1;
+      --muted: #9fada8;
+      --line: rgba(255, 255, 255, 0.12);
+      --amber: #e9a23f;
+      --forest: #38b89a;
+      --aqua: #45c6c0;
+      --coral: #f0795a;
+      --gold: #ebc25e;
+      --violet: #9384de;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
     }
 
     * {
@@ -37,7 +38,11 @@
       margin: 0;
       min-height: 100vh;
       overflow-x: hidden;
-      background: var(--bg);
+      background:
+        radial-gradient(1100px 920px at 15% 46%, rgba(120, 64, 20, 0.34) 0%, rgba(40, 22, 10, 0) 55%),
+        radial-gradient(820px 700px at 11% 40%, rgba(233, 150, 60, 0.16) 0%, rgba(0, 0, 0, 0) 46%),
+        linear-gradient(140deg, #0a0d10 0%, #07090b 52%, #05070a 100%);
+      background-attachment: fixed;
       color: var(--ink);
       font-family: "Manrope", "Trebuchet MS", sans-serif;
       letter-spacing: 0;
@@ -50,11 +55,11 @@
       z-index: -1;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(15, 92, 77, 0.09) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 92, 77, 0.08) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
       background-size: 76px 76px;
-      opacity: 0.38;
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 88%);
+      opacity: 0.5;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 88%);
     }
 
     a {
@@ -64,18 +69,17 @@
 
     a:focus-visible,
     button:focus-visible {
-      outline: 3px solid rgba(216, 93, 63, 0.55);
+      outline: 3px solid rgba(233, 162, 63, 0.6);
       outline-offset: 4px;
     }
 
-    #ai-canvas {
+    #globe-canvas {
       position: fixed;
       inset: 0;
       z-index: -2;
       width: 100%;
       height: 100%;
-      background:
-        linear-gradient(135deg, #edf5ee 0%, #f9fcf9 48%, #e5efed 100%);
+      pointer-events: none;
     }
 
     .site {
@@ -88,7 +92,7 @@
       top: 0;
       z-index: 20;
       border-bottom: 1px solid var(--line);
-      background: rgba(238, 243, 239, 0.82);
+      background: rgba(8, 11, 14, 0.72);
       backdrop-filter: blur(18px);
     }
 
@@ -114,12 +118,12 @@
       height: 34px;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(15, 92, 77, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 50%;
-      background: var(--paper-solid);
-      color: var(--forest);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--amber);
       font-size: 0.86rem;
-      box-shadow: 0 10px 26px rgba(35, 58, 49, 0.1);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
     }
 
     .nav-links {
@@ -138,24 +142,24 @@
       padding: 0 14px;
       border: 1px solid transparent;
       border-radius: 999px;
-      color: #24342f;
+      color: #d4ded9;
     }
 
     .nav-links a:hover {
-      border-color: rgba(15, 92, 77, 0.2);
-      background: rgba(255, 255, 255, 0.62);
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .nav-links .github-link {
-      border-color: rgba(15, 92, 77, 0.24);
-      background: #111814;
-      color: #fbfdfb;
-      box-shadow: 0 12px 30px rgba(17, 24, 20, 0.16);
+      border-color: transparent;
+      background: linear-gradient(135deg, #f0a93f, #e07d3a);
+      color: #1a1206;
+      box-shadow: 0 12px 30px rgba(224, 125, 58, 0.28);
     }
 
     .nav-links .github-link:hover {
-      border-color: #111814;
-      background: #20332c;
+      background: linear-gradient(135deg, #f5b454, #e98944);
+      border-color: transparent;
     }
 
     .hero,
@@ -179,10 +183,10 @@
       align-items: center;
       min-height: 38px;
       padding: 0 13px;
-      border: 1px solid rgba(15, 92, 77, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.66);
-      color: var(--forest);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--amber);
       font-size: 0.84rem;
       font-weight: 800;
     }
@@ -200,12 +204,13 @@
       margin-top: 22px;
       font-size: 5.1rem;
       line-height: 0.96;
+      color: #f4f8f6;
     }
 
     .hero-subhead {
       max-width: 650px;
       margin: 20px 0 0;
-      color: #293b35;
+      color: #c4d0cb;
       font-size: 1.2rem;
       line-height: 1.72;
     }
@@ -224,7 +229,7 @@
       justify-content: center;
       padding: 0 18px;
       border-radius: 999px;
-      border: 1px solid rgba(15, 92, 77, 0.26);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       font-size: 0.95rem;
       font-weight: 800;
       transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
@@ -235,13 +240,14 @@
     }
 
     .button.primary {
-      background: var(--forest);
-      color: #fbfdfb;
-      box-shadow: 0 18px 38px rgba(15, 92, 77, 0.22);
+      background: linear-gradient(135deg, #f0a93f, #e07d3a);
+      border-color: transparent;
+      color: #1a1206;
+      box-shadow: 0 18px 38px rgba(224, 125, 58, 0.26);
     }
 
     .button.secondary {
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.06);
       color: var(--ink);
     }
 
@@ -260,9 +266,9 @@
       display: inline-flex;
       align-items: center;
       padding: 0 12px;
-      border: 1px solid rgba(15, 92, 77, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.58);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .portrait-area {
@@ -276,7 +282,7 @@
     .portrait-area::after {
       content: "";
       position: absolute;
-      border: 1px solid rgba(15, 92, 77, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       transform: rotate(-8deg);
     }
 
@@ -291,7 +297,7 @@
       height: 170px;
       border-radius: 999px;
       transform: rotate(20deg);
-      border-color: rgba(216, 93, 63, 0.18);
+      border-color: rgba(240, 121, 90, 0.24);
     }
 
     .portrait-frame {
@@ -309,11 +315,11 @@
       width: 100%;
       height: 100%;
       display: block;
-      border: 10px solid #fbfdfb;
+      border: 8px solid #0c1014;
       border-radius: 50%;
       object-fit: cover;
       object-position: center 36%;
-      background: #dfe9e3;
+      background: #11171c;
     }
 
     .portrait-caption {
@@ -323,12 +329,12 @@
       bottom: 32px;
       width: min(220px, 58vw);
       padding: 14px 16px;
-      border: 1px solid rgba(17, 24, 20, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.82);
-      box-shadow: 0 18px 45px rgba(35, 58, 49, 0.15);
+      background: rgba(13, 18, 22, 0.78);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(16px);
-      color: #293b35;
+      color: #d8e2dd;
       font-size: 0.88rem;
       font-weight: 800;
       line-height: 1.45;
@@ -354,7 +360,7 @@
       inset: 20px -26px -18px;
       z-index: -1;
       pointer-events: none;
-      background: radial-gradient(ellipse at 34% 46%, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.58) 48%, rgba(255, 255, 255, 0) 76%);
+      background: radial-gradient(ellipse at 34% 46%, rgba(233, 162, 63, 0.07), rgba(0, 0, 0, 0) 72%);
     }
 
     .eyebrow {
@@ -363,10 +369,10 @@
       min-height: 32px;
       margin-bottom: 14px;
       padding: 0 11px;
-      border: 1px solid rgba(15, 92, 77, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.72);
-      color: var(--forest);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--amber);
       font-size: 0.84rem;
       font-weight: 800;
     }
@@ -374,6 +380,7 @@
     h2 {
       font-size: 3.2rem;
       line-height: 1.02;
+      color: #f1f6f3;
     }
 
     .section-intro {
@@ -394,10 +401,10 @@
     .resume-feature,
     .resume-card,
     .project-card {
-      border: 1px solid rgba(15, 92, 77, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 8px;
       background: var(--paper);
-      box-shadow: 0 18px 52px rgba(35, 58, 49, 0.12);
+      box-shadow: var(--shadow);
       backdrop-filter: blur(18px);
     }
 
@@ -408,7 +415,7 @@
       justify-content: space-between;
       min-height: 360px;
       background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(243, 249, 245, 0.9));
+        linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
     }
 
     .resume-feature h3,
@@ -434,10 +441,10 @@
       width: fit-content;
       min-height: 32px;
       padding: 0 10px;
-      border: 1px solid rgba(216, 93, 63, 0.22);
+      border: 1px solid rgba(240, 121, 90, 0.4);
       border-radius: 999px;
-      color: #8d321f;
-      background: rgba(255, 240, 232, 0.76);
+      color: #ffb59e;
+      background: rgba(240, 121, 90, 0.12);
       font-size: 0.82rem;
       font-weight: 800;
     }
@@ -468,9 +475,9 @@
       align-items: center;
       justify-content: center;
       padding: 0 12px;
-      border: 1px solid rgba(15, 92, 77, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.68);
+      background: rgba(255, 255, 255, 0.05);
       color: var(--forest);
       font-size: 0.86rem;
       font-weight: 800;
@@ -478,8 +485,8 @@
 
     .contact-link:hover,
     .resume-link:hover {
-      color: var(--coral);
-      border-color: rgba(216, 93, 63, 0.28);
+      color: var(--amber);
+      border-color: rgba(233, 162, 63, 0.4);
     }
 
     .experience-list {
@@ -490,8 +497,8 @@
 
     .experience-item {
       padding: 22px 0 22px 24px;
-      border-left: 3px solid rgba(15, 92, 77, 0.74);
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0));
+      border-left: 3px solid var(--amber);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
     }
 
     .experience-item h3 {
@@ -541,7 +548,7 @@
       grid-column: 1 / -1;
       min-height: auto;
       background:
-        linear-gradient(120deg, rgba(255, 255, 255, 0.86), rgba(240, 248, 243, 0.72));
+        linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
     }
 
     .project-top {
@@ -558,8 +565,8 @@
       display: grid;
       place-items: center;
       border-radius: 50%;
-      background: #111814;
-      color: #fbfdfb;
+      background: linear-gradient(135deg, #f0a93f, #e07d3a);
+      color: #1a1206;
       font-weight: 800;
       font-size: 0.88rem;
     }
@@ -584,10 +591,10 @@
       display: inline-flex;
       align-items: center;
       padding: 0 10px;
-      border: 1px solid rgba(15, 92, 77, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.66);
-      color: #293b35;
+      background: rgba(255, 255, 255, 0.05);
+      color: #c7d2cd;
       font-size: 0.78rem;
       font-weight: 800;
     }
@@ -601,7 +608,7 @@
     }
 
     .project-link:hover {
-      color: var(--coral);
+      color: var(--amber);
     }
 
     footer {
@@ -621,6 +628,10 @@
 
     .footer-inner a {
       color: var(--forest);
+    }
+
+    .footer-inner a:hover {
+      color: var(--amber);
     }
 
     @media (max-width: 900px) {
@@ -645,6 +656,10 @@
     }
 
     @media (max-width: 720px) {
+      #globe-canvas {
+        opacity: 0.5;
+      }
+
       .nav,
       .hero,
       .section,
@@ -765,7 +780,7 @@
   </style>
 </head>
 <body>
-  <canvas id="ai-canvas" aria-hidden="true"></canvas>
+  <canvas id="globe-canvas" aria-hidden="true"></canvas>
   <div class="site">
     <header class="topbar">
       <nav class="nav" aria-label="Primary navigation">
@@ -852,7 +867,7 @@
             </article>
             <article class="resume-card">
               <h3>Technical skills</h3>
-              <p>Python, NumPy, Pandas, Flask, R, Java, statistical analysis, linear algebra, regression models, clustering algorithms, and machine learning models.</p>
+              <p>Python, NumPy, Pandas, PyTorch, R, Java, statistical analysis, linear algebra, regression models, clustering algorithms, and machine learning models.</p>
             </article>
             <article class="resume-card">
               <h3>Leadership strengths</h3>
@@ -884,9 +899,9 @@
         <div class="section-heading">
           <div class="eyebrow">Projects</div>
           <div>
-            <h2 id="projects-title">Prediction models, web apps, and public GitHub work.</h2>
+            <h2 id="projects-title">Prediction models, deep learning, and public GitHub work.</h2>
             <p class="section-intro">
-              This section now blends your resume's featured technical project with repositories from your public GitHub profile. The next polish pass can turn the strongest entries into full case studies with screenshots and outcomes.
+              A selection of my most relevant work, from an award-winning sales prediction model to a from-scratch transformer and a course-advising AI assistant. Each public project links straight to the source on GitHub.
             </p>
           </div>
         </div>
@@ -915,13 +930,53 @@
           <article class="project-card">
             <div class="project-top">
               <div>
-                <h3>Logistic Regression ML Project</h3>
-                <div class="repo-name">Machine-Project-Logisitic-Regression</div>
+                <h3>Decoder-Only Transformer (GPT)</h3>
+                <div class="repo-name">GPT</div>
               </div>
               <span class="project-number">02</span>
             </div>
             <p>
-              Machine learning project that splits data, trains a logistic regression model, and targets accuracy above 75 percent.
+              A from-scratch, ~10M-parameter decoder-only transformer built in PyTorch and trained on the Linux source tree. Implements causal (lower-triangular) masked self-attention and auto-detects CPU/CUDA for training.
+            </p>
+            <div class="tags">
+              <span class="tag">PyTorch</span>
+              <span class="tag">Transformers</span>
+              <span class="tag">Deep learning</span>
+              <span class="tag">NLP</span>
+            </div>
+            <a class="project-link" href="https://github.com/AlecBhamani1/GPT" target="_blank" rel="noreferrer">View repository</a>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <h3>BadgerBot Course Advisor</h3>
+                <div class="repo-name">MadData2025</div>
+              </div>
+              <span class="project-number">03</span>
+            </div>
+            <p>
+              MadData 2025 hackathon project: an AI assistant that helps UW-Madison students pick relevant coursework. Combines Madgrades and Rate My Professor data with FAISS vector search to recommend classes better than the default course selector.
+            </p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">FAISS embeddings</span>
+              <span class="tag">RAG chatbot</span>
+              <span class="tag">Hackathon</span>
+            </div>
+            <a class="project-link" href="https://github.com/AlecBhamani1/MadData2025" target="_blank" rel="noreferrer">View repository</a>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <h3>Logistic Regression ML Project</h3>
+                <div class="repo-name">Machine-Project-Logisitic-Regression</div>
+              </div>
+              <span class="project-number">04</span>
+            </div>
+            <p>
+              Machine learning project that splits user/log data into train and test sets, trains a logistic regression classifier, and tunes it to reach over 75 percent accuracy.
             </p>
             <div class="tags">
               <span class="tag">Python</span>
@@ -937,10 +992,10 @@
                 <h3>Weather App</h3>
                 <div class="repo-name">python-weather</div>
               </div>
-              <span class="project-number">03</span>
+              <span class="project-number">05</span>
             </div>
             <p>
-              Flask weather application for city search, current conditions, humidity, wind speed, and short-term forecasts through OpenWeatherMap.
+              Flask weather application for city search with current conditions, humidity, wind speed, and short-term forecasts pulled from the OpenWeatherMap API, wrapped in a clean responsive UI.
             </p>
             <div class="tags">
               <span class="tag">Flask</span>
@@ -948,44 +1003,6 @@
               <span class="tag">API integration</span>
             </div>
             <a class="project-link" href="https://github.com/AlecBhamani1/python-weather" target="_blank" rel="noreferrer">View repository</a>
-          </article>
-
-          <article class="project-card">
-            <div class="project-top">
-              <div>
-                <h3>MadData 2025 Hackathon</h3>
-                <div class="repo-name">MadData2025</div>
-              </div>
-              <span class="project-number">04</span>
-            </div>
-            <p>
-              BadgerBot AI made to help students pick relevent course work and manage classes rather than using the course selector provided by UW Madison
-            </p>
-            <div class="tags">
-              <span class="tag">Hackathon</span>
-              <span class="tag">Data</span>
-              <span class="tag">Team project</span>
-            </div>
-            <a class="project-link" href="https://github.com/AlecBhamani1/MadData2025" target="_blank" rel="noreferrer">View repository</a>
-          </article>
-
-          <article class="project-card">
-            <div class="project-top">
-              <div>
-                <h3>Minecraft Forge Content Mod</h3>
-                <div class="repo-name">naruto_mod</div>
-              </div>
-              <span class="project-number">05</span>
-            </div>
-            <p>
-              Public Minecraft Forge 1.12.2 content mod with a Naruto-inspired feature set, useful for showing game modding and large codebase exploration.
-            </p>
-            <div class="tags">
-              <span class="tag">Minecraft Forge</span>
-              <span class="tag">Game modding</span>
-              <span class="tag">Forked repo</span>
-            </div>
-            <a class="project-link" href="https://github.com/AlecBhamani1/naruto_mod" target="_blank" rel="noreferrer">View repository</a>
           </article>
         </div>
 
@@ -1000,148 +1017,265 @@
     </footer>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
   <script>
-    const canvas = document.getElementById("ai-canvas");
-    const ctx = canvas.getContext("2d");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Geographically accurate connected-world globe, anchored to the left.
+    // Real coastlines (Natural Earth 110m) drawn with a d3-geo orthographic
+    // projection, glowing city lights at real coordinates, and animated
+    // "internet connection" arcs. Motion stays on the globe — nothing drifts
+    // across the screen. Falls back to a plain dark backdrop if assets fail.
+    (function () {
+      const canvas = document.getElementById("globe-canvas");
+      const ctx = canvas.getContext("2d");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    let width = 0;
-    let height = 0;
-    let nodes = [];
-    let streams = [];
-    let animationFrame = 0;
+      const TILT = -22;        // degrees; tilts the view slightly north (like the reference)
+      const START_LON = -12;   // initial center longitude — Europe / Africa facing us
+      const SPIN = 3.2;        // degrees per second — slow, contained rotation
 
-    const palette = [
-      "rgba(15, 92, 77, 0.8)",
-      "rgba(43, 157, 152, 0.72)",
-      "rgba(216, 93, 63, 0.62)",
-      "rgba(102, 87, 166, 0.52)"
-    ];
+      // Real coordinates [longitude, latitude] of major world cities.
+      const CITIES = [
+        [-74.0, 40.7], [-118.2, 34.0], [-87.6, 41.8], [-79.4, 43.7], [-99.1, 19.4],
+        [-46.6, -23.5], [-58.4, -34.6], [-0.12, 51.5], [2.35, 48.85], [-3.7, 40.4],
+        [13.4, 52.5], [12.5, 41.9], [37.6, 55.75], [28.98, 41.0], [31.24, 30.05],
+        [3.39, 6.45], [28.05, -26.2], [36.82, -1.29], [55.27, 25.2], [72.88, 19.07],
+        [77.21, 28.6], [103.82, 1.35], [100.5, 13.75], [114.17, 22.3], [121.47, 31.23],
+        [116.4, 39.9], [139.69, 35.69], [126.98, 37.57], [151.21, -33.87], [106.85, -6.21]
+      ];
 
-    function randomBetween(min, max) {
-      return min + Math.random() * (max - min);
-    }
+      let width = 0, height = 0, cx = 0, cy = 0, R = 0;
+      let projection = null, path = null;
+      let geoFill = null, geoCoast = null, geoBorders = null, graticule = null;
+      let ready = false;
+      let cityState = [];
+      let arcs = [];
+      let sparks = [];
+      let animationFrame = 0;
+      let lastTime = null;
 
-    function resizeCanvas() {
-      const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = Math.floor(width * ratio);
-      canvas.height = Math.floor(height * ratio);
-      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      function randomBetween(min, max) { return min + Math.random() * (max - min); }
 
-      const nodeCount = Math.min(90, Math.max(36, Math.floor((width * height) / 18000)));
-      nodes = Array.from({ length: nodeCount }, (_, index) => ({
-        x: randomBetween(-40, width + 40),
-        y: randomBetween(-40, height + 40),
-        vx: randomBetween(-0.18, 0.18),
-        vy: randomBetween(-0.14, 0.14),
-        radius: randomBetween(1.4, 3.8),
-        color: palette[index % palette.length]
-      }));
-
-      const streamCount = Math.min(9, Math.max(5, Math.floor(width / 180)));
-      streams = Array.from({ length: streamCount }, (_, index) => ({
-        y: ((index + 1) / (streamCount + 1)) * height,
-        speed: randomBetween(0.035, 0.075),
-        offset: Math.random(),
-        sway: randomBetween(18, 48),
-        color: palette[index % palette.length]
-      }));
-    }
-
-    function wrapNode(node) {
-      if (node.x < -80) node.x = width + 80;
-      if (node.x > width + 80) node.x = -80;
-      if (node.y < -80) node.y = height + 80;
-      if (node.y > height + 80) node.y = -80;
-    }
-
-    function drawBackground(time) {
-      ctx.clearRect(0, 0, width, height);
-      const seconds = time * 0.001;
-
-      ctx.save();
-      ctx.lineWidth = 1;
-      for (let i = 0; i < 6; i += 1) {
-        const y = ((i + 1) / 7) * height + Math.sin(seconds * 0.35 + i) * 18;
-        ctx.beginPath();
-        ctx.moveTo(-40, y);
-        ctx.bezierCurveTo(width * 0.28, y - 70, width * 0.55, y + 86, width + 40, y - 20);
-        ctx.strokeStyle = i % 2 === 0 ? "rgba(15, 92, 77, 0.08)" : "rgba(216, 93, 63, 0.07)";
-        ctx.stroke();
-      }
-      ctx.restore();
-
-      streams.forEach((stream, index) => {
-        const progress = reducedMotion.matches ? stream.offset : (seconds * stream.speed + stream.offset) % 1;
-        const x = progress * (width + 240) - 120;
-        const y = stream.y + Math.sin(seconds * 0.7 + index) * stream.sway;
-
-        ctx.save();
-        ctx.strokeStyle = stream.color.replace("0.", "0.1").replace("0.8", "0.1");
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(x - 150, y);
-        ctx.lineTo(x + 16, y);
-        ctx.stroke();
-
-        ctx.fillStyle = stream.color.replace("0.", "0.62").replace("0.8", "0.62");
-        ctx.fillRect(x, y - 2, 16, 4);
-        ctx.restore();
-      });
-
-      nodes.forEach((node) => {
-        if (!reducedMotion.matches) {
-          node.x += node.vx;
-          node.y += node.vy;
-          wrapNode(node);
+      function buildExtras() {
+        cityState = CITIES.map(function () { return { tw: Math.random() * Math.PI * 2 }; });
+        arcs = [];
+        for (let i = 0; i < 9; i += 1) arcs.push(spawnArc(i * 360));
+        sparks = [];
+        for (let i = 0; i < 16; i += 1) {
+          sparks.push({
+            x: randomBetween(0.62, 0.98),
+            y: randomBetween(0.16, 0.92),
+            s: randomBetween(2.5, 5.5),
+            a: randomBetween(0.05, 0.22)
+          });
         }
-      });
+      }
 
-      for (let i = 0; i < nodes.length; i += 1) {
-        for (let j = i + 1; j < nodes.length; j += 1) {
-          const first = nodes[i];
-          const second = nodes[j];
-          const dx = first.x - second.x;
-          const dy = first.y - second.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 142) {
-            const opacity = (1 - distance / 142) * 0.12;
-            ctx.strokeStyle = `rgba(15, 92, 77, ${opacity})`;
-            ctx.lineWidth = 1;
+      function spawnArc(delay) {
+        const a = (Math.random() * CITIES.length) | 0;
+        let b = (Math.random() * CITIES.length) | 0;
+        if (b === a) b = (b + 1) % CITIES.length;
+        return { a, b, born: -delay, dur: randomBetween(2800, 4600) };
+      }
+
+      function resizeCanvas() {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * ratio);
+        canvas.height = Math.floor(height * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+        const compact = width < 760;
+        R = compact
+          ? Math.min(width * 0.46, height * 0.34)
+          : Math.min(width * 0.30, height * 0.46, 460);
+        cx = compact ? width * 0.5 : width * 0.17;
+        cy = compact ? height * 0.32 : height * 0.5;
+
+        if (projection) projection.scale(R).translate([cx, cy]);
+        if (!sparks.length) buildExtras();
+      }
+
+      function quad(p0, p1, cxp, cyp, u) {
+        const m = 1 - u;
+        return {
+          x: m * m * p0[0] + 2 * m * u * cxp + u * u * p1[0],
+          y: m * m * p0[1] + 2 * m * u * cyp + u * u * p1[1]
+        };
+      }
+
+      function drawGlobe(elapsed) {
+        ctx.clearRect(0, 0, width, height);
+
+        // Static "+" marks on the right (these never move).
+        sparks.forEach(function (p) {
+          const x = p.x * width, y = p.y * height;
+          ctx.strokeStyle = "rgba(233, 162, 63, " + p.a + ")";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x - p.s, y); ctx.lineTo(x + p.s, y);
+          ctx.moveTo(x, y - p.s); ctx.lineTo(x, y + p.s);
+          ctx.stroke();
+        });
+
+        // Atmosphere glow.
+        const glow = ctx.createRadialGradient(cx, cy, R * 0.82, cx, cy, R * 1.45);
+        glow.addColorStop(0, "rgba(233, 162, 63, 0.14)");
+        glow.addColorStop(0.55, "rgba(216, 120, 50, 0.06)");
+        glow.addColorStop(1, "rgba(233, 162, 63, 0)");
+        ctx.fillStyle = glow;
+        ctx.beginPath(); ctx.arc(cx, cy, R * 1.45, 0, Math.PI * 2); ctx.fill();
+
+        // Ocean sphere, lit from the upper-left.
+        const body = ctx.createRadialGradient(cx - R * 0.38, cy - R * 0.42, R * 0.05, cx, cy, R * 1.02);
+        body.addColorStop(0, "rgba(32, 27, 21, 1)");
+        body.addColorStop(0.55, "rgba(14, 15, 18, 1)");
+        body.addColorStop(1, "rgba(6, 7, 9, 1)");
+        ctx.fillStyle = body;
+        ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+
+        if (ready) {
+          const lon = START_LON + (elapsed / 1000) * SPIN;
+          projection.rotate([lon, TILT, 0]);
+
+          // Graticule (faint globe grid).
+          ctx.beginPath(); path(graticule);
+          ctx.strokeStyle = "rgba(150, 168, 162, 0.07)";
+          ctx.lineWidth = 0.6; ctx.stroke();
+
+          // Land fill (real continents).
+          ctx.beginPath(); path(geoFill);
+          ctx.fillStyle = "rgba(48, 42, 32, 0.92)";
+          ctx.fill();
+
+          // Country borders (faint).
+          ctx.beginPath(); path(geoBorders);
+          ctx.strokeStyle = "rgba(233, 162, 63, 0.12)";
+          ctx.lineWidth = 0.5; ctx.stroke();
+
+          // Coastlines (amber glow).
+          ctx.beginPath(); path(geoCoast);
+          ctx.strokeStyle = "rgba(240, 165, 78, 0.42)";
+          ctx.lineWidth = 0.9; ctx.stroke();
+
+          const rot = projection.rotate();
+          const center = [-rot[0], -rot[1]];
+
+          // City lights.
+          for (let i = 0; i < CITIES.length; i += 1) {
+            const front = Math.cos(d3.geoDistance(CITIES[i], center));
+            if (front <= 0.04) continue;
+            const p = projection(CITIES[i]);
+            const twinkle = 0.62 + 0.38 * Math.sin(elapsed * 0.002 + cityState[i].tw);
+            const aa = (0.3 + 0.7 * front) * twinkle;
+            const r = 1.0 + 1.1 * front;
+            const g = ctx.createRadialGradient(p[0], p[1], 0, p[0], p[1], r * 4);
+            g.addColorStop(0, "rgba(255, 198, 112, " + aa + ")");
+            g.addColorStop(0.5, "rgba(233, 140, 52, " + (aa * 0.42) + ")");
+            g.addColorStop(1, "rgba(233, 140, 52, 0)");
+            ctx.fillStyle = g;
+            ctx.beginPath(); ctx.arc(p[0], p[1], r * 4, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "rgba(255, 226, 170, " + Math.min(1, aa + 0.18) + ")";
+            ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.6, 0, Math.PI * 2); ctx.fill();
+          }
+
+          // Connection arcs that lift off the surface, with a traveling packet.
+          for (let i = 0; i < arcs.length; i += 1) {
+            const arc = arcs[i];
+            const age = elapsed - arc.born;
+            if (age < 0) continue;
+            const t = age / arc.dur;
+            if (t >= 1) { arcs[i] = spawnArc(0); continue; }
+
+            const ca = CITIES[arc.a], cb = CITIES[arc.b];
+            const fa = Math.cos(d3.geoDistance(ca, center));
+            const fb = Math.cos(d3.geoDistance(cb, center));
+            if (fa <= 0.02 || fb <= 0.02) continue;
+
+            const pa = projection(ca), pb = projection(cb);
+            const mx = (pa[0] + pb[0]) / 2, my = (pa[1] + pb[1]) / 2;
+            const ddx = mx - cx, ddy = my - cy;
+            const lift = 1 + 0.22 + Math.hypot(pa[0] - pb[0], pa[1] - pb[1]) / (R * 7);
+            const ctrlX = cx + ddx * lift, ctrlY = cy + ddy * lift;
+            const fade = Math.min(1, t / 0.16) * Math.min(1, (1 - t) / 0.24)
+              * Math.min(1, fa / 0.2) * Math.min(1, fb / 0.2);
+
+            ctx.strokeStyle = "rgba(243, 158, 80, " + (0.4 * fade) + ")";
+            ctx.lineWidth = 1.1;
             ctx.beginPath();
-            ctx.moveTo(first.x, first.y);
-            ctx.lineTo(second.x, second.y);
+            ctx.moveTo(pa[0], pa[1]);
+            ctx.quadraticCurveTo(ctrlX, ctrlY, pb[0], pb[1]);
             ctx.stroke();
+
+            const head = quad(pa, pb, ctrlX, ctrlY, t);
+            const tail = quad(pa, pb, ctrlX, ctrlY, Math.max(0, t - 0.12));
+            const grad = ctx.createLinearGradient(tail.x, tail.y, head.x, head.y);
+            grad.addColorStop(0, "rgba(255, 190, 100, 0)");
+            grad.addColorStop(1, "rgba(255, 214, 150, " + (0.95 * fade) + ")");
+            ctx.strokeStyle = grad; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(tail.x, tail.y); ctx.lineTo(head.x, head.y); ctx.stroke();
+
+            ctx.fillStyle = "rgba(255, 226, 170, " + fade + ")";
+            ctx.beginPath(); ctx.arc(head.x, head.y, 2.1, 0, Math.PI * 2); ctx.fill();
           }
         }
+
+        // Bright rim crescent (top atmosphere highlight).
+        ctx.save();
+        ctx.beginPath(); ctx.arc(cx, cy, R, Math.PI * 0.86, Math.PI * 1.7);
+        ctx.strokeStyle = "rgba(214, 226, 222, 0.42)";
+        ctx.lineWidth = 1.6;
+        ctx.shadowColor = "rgba(255, 236, 200, 0.5)"; ctx.shadowBlur = 14;
+        ctx.stroke();
+        ctx.restore();
       }
 
-      nodes.forEach((node) => {
-        ctx.beginPath();
-        ctx.fillStyle = node.color.replace("0.", "0.68").replace("0.8", "0.68");
-        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
-
-    function loop(time) {
-      drawBackground(time);
-      if (!reducedMotion.matches) {
+      function loop(time) {
+        if (lastTime === null) lastTime = time;
+        lastTime = time;
+        drawGlobe(time);
         animationFrame = requestAnimationFrame(loop);
       }
-    }
 
-    function restartAnimation() {
-      cancelAnimationFrame(animationFrame);
+      function restartAnimation() {
+        cancelAnimationFrame(animationFrame);
+        lastTime = null;
+        resizeCanvas();
+        if (reducedMotion.matches) {
+          drawGlobe(0);   // static frame: Europe / Africa centered
+        } else {
+          animationFrame = requestAnimationFrame(loop);
+        }
+      }
+
+      function init() {
+        try {
+          if (typeof d3 === "undefined" || typeof topojson === "undefined") return;
+          fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+            .then(function (r) { return r.json(); })
+            .then(function (world) {
+              const obj = world.objects.countries;
+              geoFill = topojson.merge(world, obj.geometries);
+              geoCoast = topojson.mesh(world, obj, function (a, b) { return a === b; });
+              geoBorders = topojson.mesh(world, obj, function (a, b) { return a !== b; });
+              graticule = d3.geoGraticule10();
+              projection = d3.geoOrthographic().clipAngle(90).precision(0.5)
+                .scale(R).translate([cx, cy]);
+              path = d3.geoPath(projection, ctx);
+              ready = true;
+              restartAnimation();
+            })
+            .catch(function () { /* keep the plain dark backdrop */ });
+        } catch (e) { /* keep the plain dark backdrop */ }
+      }
+
+      window.addEventListener("resize", restartAnimation);
+      reducedMotion.addEventListener("change", restartAnimation);
       resizeCanvas();
-      animationFrame = requestAnimationFrame(loop);
-    }
-
-    window.addEventListener("resize", restartAnimation);
-    reducedMotion.addEventListener("change", restartAnimation);
-    restartAnimation();
+      restartAnimation();   // draw ocean + sparks immediately while coastlines load
+      init();
+    })();
   </script>
 </body>
 </html>
