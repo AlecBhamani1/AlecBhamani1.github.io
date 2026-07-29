@@ -1,1313 +1,434 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Alec Bhamani portfolio for AI, data, software projects, and resume highlights.">
-  <title>Alec Bhamani | AI &amp; Software Portfolio</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23070a0c'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial, sans-serif' font-size='24' font-weight='700' fill='%23e9a23f'%3EAB%3C/text%3E%3C/svg%3E">
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap");
-
-    :root {
-      color-scheme: dark;
-      --bg: #07090b;
-      --paper: rgba(255, 255, 255, 0.05);
-      --paper-solid: #0f141a;
-      --ink: #eef3f1;
-      --muted: #cdd8d3;
-      --line: rgba(255, 255, 255, 0.12);
-      --amber: #e9a23f;
-      --forest: #38b89a;
-      --aqua: #45c6c0;
-      --coral: #f0795a;
-      --gold: #ebc25e;
-      --violet: #9384de;
-      --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      overflow-x: hidden;
-      background:
-        radial-gradient(1100px 920px at 15% 46%, rgba(120, 64, 20, 0.34) 0%, rgba(40, 22, 10, 0) 55%),
-        radial-gradient(820px 700px at 11% 40%, rgba(233, 150, 60, 0.16) 0%, rgba(0, 0, 0, 0) 46%),
-        linear-gradient(140deg, #0a0d10 0%, #07090b 52%, #05070a 100%);
-      background-attachment: fixed;
-      color: var(--ink);
-      font-family: "Manrope", "Trebuchet MS", sans-serif;
-      letter-spacing: 0;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 76px 76px;
-      opacity: 0.5;
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 88%);
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    a:focus-visible,
-    button:focus-visible {
-      outline: 3px solid rgba(233, 162, 63, 0.6);
-      outline-offset: 4px;
-    }
-
-    #globe-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .site {
-      position: relative;
-      z-index: 1;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      border-bottom: 1px solid var(--line);
-      background: rgba(8, 11, 14, 0.72);
-      backdrop-filter: blur(18px);
-    }
-
-    .nav {
-      width: min(1120px, calc(100% - 40px));
-      height: 72px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 18px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
-
-    .nav-links a {
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 14px;
-      border: 1px solid transparent;
-      border-radius: 999px;
-      color: #d4ded9;
-    }
-
-    .nav-links a:hover {
-      border-color: rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .nav-links .github-link {
-      border-color: transparent;
-      background: linear-gradient(135deg, #f0a93f, #e07d3a);
-      color: #1a1206;
-      box-shadow: 0 12px 30px rgba(224, 125, 58, 0.28);
-    }
-
-    .nav-links .github-link:hover {
-      background: linear-gradient(135deg, #f5b454, #e98944);
-      border-color: transparent;
-    }
-
-    .hero,
-    .section,
-    .footer-inner {
-      width: min(1120px, calc(100% - 40px));
-      margin: 0 auto;
-    }
-
-    .hero {
-      min-height: min(760px, calc(100vh - 72px));
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
-      gap: 66px;
-      align-items: center;
-      padding: 72px 0 58px;
-    }
-
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      min-height: 38px;
-      padding: 0 13px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--amber);
-      font-size: 0.84rem;
-      font-weight: 800;
-    }
-
-    h1,
-    h2 {
-      margin: 0;
-      font-family: "Instrument Serif", Georgia, serif;
-      font-weight: 400;
-      letter-spacing: 0;
-    }
-
-    h1 {
-      max-width: 760px;
-      margin-top: 22px;
-      font-size: 5.1rem;
-      line-height: 0.96;
-      color: #f4f8f6;
-    }
-
-    .hero-subhead {
-      max-width: 650px;
-      margin: 20px 0 0;
-      color: #e3ebe7;
-      font-size: 1.2rem;
-      line-height: 1.72;
-    }
-
-    .hero-actions {
-      margin-top: 34px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .button {
-      min-height: 50px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      font-size: 0.95rem;
-      font-weight: 800;
-      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-    }
-
-    .button.primary {
-      background: linear-gradient(135deg, #f0a93f, #e07d3a);
-      border-color: transparent;
-      color: #1a1206;
-      box-shadow: 0 18px 38px rgba(224, 125, 58, 0.26);
-    }
-
-    .button.secondary {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--ink);
-    }
-
-    .hero-notes {
-      margin-top: 34px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-
-    .note {
-      min-height: 34px;
-      display: inline-flex;
-      align-items: center;
-      padding: 0 12px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .portrait-area {
-      position: relative;
-      min-height: 430px;
-      display: grid;
-      place-items: center;
-    }
-
-    .portrait-area::before,
-    .portrait-area::after {
-      content: "";
-      position: absolute;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      transform: rotate(-8deg);
-    }
-
-    .portrait-area::before {
-      width: 330px;
-      height: 330px;
-      border-radius: 36px;
-    }
-
-    .portrait-area::after {
-      width: 420px;
-      height: 170px;
-      border-radius: 999px;
-      transform: rotate(20deg);
-      border-color: rgba(240, 121, 90, 0.24);
-    }
-
-    .portrait-frame {
-      position: relative;
-      z-index: 2;
-      width: 314px;
-      aspect-ratio: 1;
-      padding: 13px;
-      border-radius: 50%;
-      background: conic-gradient(from 160deg, var(--forest), var(--aqua), var(--gold), var(--coral), var(--forest));
-      box-shadow: var(--shadow);
-    }
-
-    .portrait-frame img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      border: 8px solid #0c1014;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center 36%;
-      background: #11171c;
-    }
-
-    .portrait-caption {
-      position: absolute;
-      z-index: 3;
-      right: 4px;
-      bottom: 32px;
-      width: min(220px, 58vw);
-      padding: 14px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      background: rgba(13, 18, 22, 0.78);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(16px);
-      color: #d8e2dd;
-      font-size: 0.88rem;
-      font-weight: 800;
-      line-height: 1.45;
-    }
-
-    .section {
-      padding: 90px 0;
-      scroll-margin-top: 92px;
-    }
-
-    .section-heading {
-      position: relative;
-      isolation: isolate;
-      max-width: 920px;
-      margin: 0 0 36px;
-      padding-top: 32px;
-      border-top: 1px solid var(--line);
-    }
-
-    .section-heading::before {
-      content: "";
-      position: absolute;
-      inset: 20px -26px -18px;
-      z-index: -1;
-      pointer-events: none;
-      background: radial-gradient(ellipse at 34% 46%, rgba(233, 162, 63, 0.07), rgba(0, 0, 0, 0) 72%);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      min-height: 32px;
-      margin-bottom: 14px;
-      padding: 0 11px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--amber);
-      font-size: 0.84rem;
-      font-weight: 800;
-    }
-
-    h2 {
-      font-size: 3.2rem;
-      line-height: 1.02;
-      color: #f1f6f3;
-    }
-
-    .section-intro {
-      margin: 16px 0 0;
-      max-width: 720px;
-      color: var(--muted);
-      font-size: 1.03rem;
-      line-height: 1.75;
-    }
-
-    .resume-layout {
-      display: grid;
-      grid-template-columns: minmax(260px, 0.88fr) minmax(0, 1.12fr);
-      gap: 20px;
-      align-items: stretch;
-    }
-
-    .resume-feature,
-    .resume-card,
-    .project-card {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      background: var(--paper);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .resume-feature {
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 360px;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-    }
-
-    .resume-feature h3,
-    .resume-card h3,
-    .project-card h3 {
-      margin: 0;
-      color: var(--ink);
-      font-size: 1.1rem;
-      line-height: 1.35;
-    }
-
-    .resume-feature p,
-    .resume-card p,
-    .project-card p {
-      margin: 14px 0 0;
-      color: var(--muted);
-      line-height: 1.72;
-    }
-
-    .resume-feature .status {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      min-height: 32px;
-      padding: 0 10px;
-      border: 1px solid rgba(240, 121, 90, 0.4);
-      border-radius: 999px;
-      color: #ffb59e;
-      background: rgba(240, 121, 90, 0.12);
-      font-size: 0.82rem;
-      font-weight: 800;
-    }
-
-    .resume-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .resume-card {
-      min-height: 170px;
-      padding: 24px;
-    }
-
-    .contact-list,
-    .resume-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .contact-link,
-    .resume-link {
-      min-height: 36px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 12px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--forest);
-      font-size: 0.86rem;
-      font-weight: 800;
-    }
-
-    .contact-link:hover,
-    .resume-link:hover {
-      color: var(--amber);
-      border-color: rgba(233, 162, 63, 0.4);
-    }
-
-    .experience-list {
-      margin-top: 28px;
-      display: grid;
-      gap: 18px;
-    }
-
-    .experience-item {
-      padding: 22px 26px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-left: 3px solid var(--amber);
-      border-radius: 8px;
-      background: var(--paper);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .experience-item h3 {
-      margin: 0;
-      font-size: 1.04rem;
-      line-height: 1.35;
-    }
-
-    .experience-meta {
-      margin-top: 8px;
-      color: var(--forest);
-      font-size: 0.86rem;
-      font-weight: 800;
-    }
-
-    .experience-item p {
-      max-width: 900px;
-      margin: 12px 0 0;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .project-card {
-      position: relative;
-      min-height: 310px;
-      padding: 26px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 5px;
-      background: linear-gradient(90deg, var(--forest), var(--aqua), var(--gold), var(--coral));
-    }
-
-    .project-card.featured {
-      grid-column: 1 / -1;
-      min-height: auto;
-      background:
-        linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-    }
-
-    .project-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: flex-start;
-    }
-
-    .project-number {
-      flex: 0 0 auto;
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #f0a93f, #e07d3a);
-      color: #1a1206;
-      font-weight: 800;
-      font-size: 0.88rem;
-    }
-
-    .repo-name {
-      margin-top: 8px;
-      color: var(--forest);
-      font-size: 0.86rem;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 22px;
-    }
-
-    .tag {
-      min-height: 30px;
-      display: inline-flex;
-      align-items: center;
-      padding: 0 10px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
-      color: #c7d2cd;
-      font-size: 0.78rem;
-      font-weight: 800;
-    }
-
-    .project-link {
-      width: fit-content;
-      margin-top: auto;
-      padding-top: 24px;
-      color: var(--forest);
-      font-weight: 800;
-    }
-
-    .project-link:hover {
-      color: var(--amber);
-    }
-
-    footer {
-      padding: 46px 0 58px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
-
-    .footer-inner a {
-      color: var(--forest);
-    }
-
-    .footer-inner a:hover {
-      color: var(--amber);
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: 34px;
-        min-height: auto;
-      }
-
-      .portrait-area {
-        min-height: 370px;
-        grid-row: 1;
-      }
-
-      h1 {
-        font-size: 4rem;
-      }
-
-      .resume-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 720px) {
-      #globe-canvas {
-        opacity: 0.5;
-      }
-
-      .nav,
-      .hero,
-      .section,
-      .footer-inner {
-        width: calc(100% - 28px);
-      }
-
-      .nav-links a:not(.github-link) {
-        display: none;
-      }
-
-      h1 {
-        font-size: 2.9rem;
-      }
-
-      h2 {
-        font-size: 2.3rem;
-      }
-
-      .hero {
-        gap: 22px;
-        padding-top: 32px;
-        padding-bottom: 44px;
-      }
-
-      .section {
-        padding: 28px 0 64px;
-      }
-
-      .section-heading {
-        padding-top: 18px;
-        margin-bottom: 24px;
-      }
-
-      .section-heading::before {
-        inset: 12px 0 -12px;
-      }
-
-      .hero-subhead,
-      .section-intro {
-        font-size: 1rem;
-        line-height: 1.62;
-      }
-
-      .hero-actions {
-        gap: 8px;
-        margin-top: 24px;
-      }
-
-      .button {
-        min-height: 46px;
-        padding: 0 13px;
-        font-size: 0.86rem;
-      }
-
-      .portrait-frame {
-        width: 218px;
-      }
-
-      .portrait-area::before {
-        width: 236px;
-        height: 236px;
-      }
-
-      .portrait-area::after {
-        width: 272px;
-        height: 112px;
-      }
-
-      .portrait-caption {
-        right: auto;
-        bottom: -2px;
-        font-size: 0.82rem;
-        padding: 12px 14px;
-      }
-
-      .portrait-area {
-        min-height: 292px;
-      }
-
-      .hero-notes {
-        display: none;
-      }
-
-      .resume-grid,
-      .project-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .contact-link,
-      .resume-link {
-        flex: 1 1 calc(50% - 5px);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-
-      .button:hover {
-        transform: none;
-      }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Alec Bhamani is a UW–Madison data science student building predictive models, machine-learning systems, and practical automation.">
+  <meta name="theme-color" content="#080b0d">
+  <link rel="canonical" href="https://alecbhamani.com/">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://alecbhamani.com/">
+  <meta property="og:title" content="Alec Bhamani | Data Science &amp; Machine Learning">
+  <meta property="og:description" content="Predictive models, ML systems, and practical automation—built with evidence, not buzzwords.">
+  <meta property="og:image" content="https://alecbhamani.com/assets/alec-bhamani-social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Alec Bhamani portfolio social card">
+  <meta property="profile:first_name" content="Alec">
+  <meta property="profile:last_name" content="Bhamani">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Alec Bhamani | Data Science &amp; Machine Learning">
+  <meta name="twitter:description" content="Predictive models, ML systems, and practical automation—built with evidence, not buzzwords.">
+  <meta name="twitter:image" content="https://alecbhamani.com/assets/alec-bhamani-social-card.jpg">
+
+  <title>Alec Bhamani | Data Science &amp; Machine Learning</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23080b0d'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial,sans-serif' font-size='24' font-weight='700' fill='%23f0a84a'%3EAB%3C/text%3E%3C/svg%3E">
+
+  <link rel="preload" href="assets/fonts/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-serif-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/styles.min.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Alec Bhamani",
+    "url": "https://alecbhamani.com/",
+    "image": "https://alecbhamani.com/assets/alec-bhamani-photo.jpg",
+    "email": "mailto:alecbhamani8@gmail.com",
+    "jobTitle": "Data Science Undergraduate",
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Wisconsin–Madison"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/alec-bhamani-528b13361/",
+      "https://github.com/AlecBhamani1"
+    ],
+    "knowsAbout": [
+      "Data science",
+      "Machine learning",
+      "Predictive modeling",
+      "Data analytics",
+      "Workflow automation"
+    ]
+  }
+  </script>
 </head>
 <body>
-  <canvas id="globe-canvas" aria-hidden="true"></canvas>
-  <div class="site">
-    <header class="topbar">
-      <nav class="nav" aria-label="Primary navigation">
-        <div class="nav-links">
-          <a href="#resume">Resume</a>
-          <a href="#projects">Projects</a>
-          <a href="https://www.linkedin.com/in/alec-bhamani-528b13361/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a class="github-link" href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
-      </nav>
-    </header>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <span class="kicker">Data Science Undergraduate | UW-Madison</span>
-          <h1 id="hero-title">Alec Bhamani</h1>
-          <p class="hero-subhead">
-            Data science student focused on operations strategy, data analytics, and AI prediction models. I build practical machine learning and automation workflows that turn messy data into clearer decisions.
-          </p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="#projects">View coding projects</a>
-            <a class="button secondary" href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noreferrer">Download resume</a>
-          </div>
-          <div class="hero-notes" aria-label="Focus areas">
-            <span class="note">AI prediction models</span>
-            <span class="note">Statistical analysis</span>
-            <span class="note">Automation strategy</span>
-          </div>
-        </div>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">AB</span>
+        <span class="brand-name">Alec Bhamani</span>
+      </a>
 
-        <div class="portrait-area" aria-label="Portrait">
-          <div class="portrait-frame">
-            <img src="assets/alec-bhamani-photo.jpg" alt="Alec Bhamani headshot">
-          </div>
-          <div class="portrait-caption">Data science, AI models, and operations analytics.</div>
-        </div>
-      </section>
-
-      <section class="section" id="resume" aria-labelledby="resume-title">
-        <div class="section-heading">
-          <div class="eyebrow">Resume</div>
-          <div>
-            <h2 id="resume-title">Data science, leadership, and AI-enabled operations work.</h2>
-            <p class="section-intro">
-              A dedicated Data Science major at the University of Wisconsin-Madison with a technical foundation in statistical analysis, machine learning algorithms, and software development, plus more than five years of work experience in fast-paced team environments.
-            </p>
-          </div>
-        </div>
-
-        <div class="resume-layout">
-          <article class="resume-feature">
-            <div>
-              <span class="status">Open to data science opportunities</span>
-              <h3>Professional snapshot</h3>
-              <p>
-                I combine coursework in probability, computer science, and machine learning with hands-on operational leadership. My strongest lane is using data analysis, AI tools, and automation to improve workflows and make teams more effective.
-              </p>
-              <div class="contact-list" aria-label="Contact links">
-                <a class="contact-link" href="mailto:alecbhamani8@gmail.com">Email</a>
-                <a class="contact-link" href="tel:+13252487320">325.248.7320</a>
-                <a class="contact-link" href="https://www.linkedin.com/in/alec-bhamani-528b13361/" target="_blank" rel="noreferrer">LinkedIn</a>
-                <a class="contact-link" href="https://alecbhamani.com/" target="_blank" rel="noreferrer">Website</a>
-              </div>
-            </div>
-            <div class="resume-links">
-              <a class="resume-link" href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noreferrer">View resume PDF</a>
-              <a class="resume-link" href="https://github.com/AlecBhamani1" target="_blank" rel="noreferrer">GitHub profile</a>
-            </div>
-          </article>
-
-          <div class="resume-grid">
-            <article class="resume-card">
-              <h3>Education</h3>
-              <p>Bachelor of Science in Data Science at the University of Wisconsin-Madison. Expected graduation: May 2028.</p>
-            </article>
-            <article class="resume-card">
-              <h3>Current role</h3>
-              <p>Associate Consultant at Krahnborn, contributing to data-driven solutions, automation strategies, and more accurate client deliverables.</p>
-            </article>
-            <article class="resume-card">
-              <h3>Technical skills</h3>
-              <p>Python, NumPy, Pandas, PyTorch, R, Java, statistical analysis, linear algebra, regression models, clustering algorithms, and machine learning models.</p>
-            </article>
-            <article class="resume-card">
-              <h3>Leadership strengths</h3>
-              <p>Operational workflows, team leadership, mentoring, customer service, professional AI leveraging, and cross-functional collaboration.</p>
-            </article>
-          </div>
-        </div>
-
-        <div class="experience-list" aria-label="Resume experience">
-          <article class="experience-item">
-            <h3>Krahnborn | Associate Consultant</h3>
-            <div class="experience-meta">Madison, Wisconsin | January 2025 - Present</div>
-            <p>Contribute to data-driven solutions and automation strategies in a consulting environment. Leverage AI tools, machine learning frameworks, LLM prompting, and data analysis techniques to reduce manual overhead and improve decision-making processes.</p>
-          </article>
-          <article class="experience-item">
-            <h3>Wisconsin Union | Bar Manager and Catering Staff</h3>
-            <div class="experience-meta">Madison, Wisconsin | January 2024 - January 2025</div>
-            <p>Promoted to Bar Manager after demonstrating reliability and leadership excellence. Led staff coordination for high-volume university venues and helped maintain smooth service during peak hours and events.</p>
-          </article>
-          <article class="experience-item">
-            <h3>Blue Lynk, LLC | Jr. Project Engineer</h3>
-            <div class="experience-meta">Austin, Texas | January 2020 - October 2022</div>
-            <p>Delivered interactive digital document products for public and private clients. Closed 20+ projects with a 100% customer satisfaction rate while meeting strict cloud-based quality standards.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="projects" aria-labelledby="projects-title">
-        <div class="section-heading">
-          <div class="eyebrow">Projects</div>
-          <div>
-            <h2 id="projects-title">Prediction models, deep learning, and public GitHub work.</h2>
-            <p class="section-intro">
-              A selection of my most relevant work, from an award-winning sales prediction model to a from-scratch transformer and a course-advising AI assistant. Each public project links straight to the source on GitHub.
-            </p>
-          </div>
-        </div>
-
-        <div class="project-grid">
-          <article class="project-card featured">
-            <div class="project-top">
-              <div>
-                <h3>Crystal Farms &amp; Cub Foods Prediction Model</h3>
-                <div class="repo-name">1st Place Winner | UW-Madison Tech Exploration Lab</div>
-              </div>
-              <span class="project-number">01</span>
-            </div>
-            <p>
-              Collaborated with a team of four to engineer a Python-based machine learning model that analyzed historical sales data and predicted promotional windows where discounts would maximize profitability.
-            </p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">Predictive modeling</span>
-              <span class="tag">Sales analytics</span>
-              <span class="tag">1st place</span>
-            </div>
-            <a class="project-link" href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noreferrer">View resume highlight</a>
-          </article>
-
-          <article class="project-card">
-            <div class="project-top">
-              <div>
-                <h3>Decoder-Only Transformer (GPT)</h3>
-                <div class="repo-name">GPT</div>
-              </div>
-              <span class="project-number">02</span>
-            </div>
-            <p>
-              A from-scratch, ~10M-parameter decoder-only transformer built in PyTorch and trained on the Linux source tree. Implements causal (lower-triangular) masked self-attention and auto-detects CPU/CUDA for training.
-            </p>
-            <div class="tags">
-              <span class="tag">PyTorch</span>
-              <span class="tag">Transformers</span>
-              <span class="tag">Deep learning</span>
-              <span class="tag">NLP</span>
-            </div>
-            <a class="project-link" href="https://github.com/AlecBhamani1/GPT" target="_blank" rel="noreferrer">View repository</a>
-          </article>
-
-          <article class="project-card">
-            <div class="project-top">
-              <div>
-                <h3>BadgerBot Course Advisor</h3>
-                <div class="repo-name">MadData2025</div>
-              </div>
-              <span class="project-number">03</span>
-            </div>
-            <p>
-              MadData 2025 hackathon project: an AI assistant that helps UW-Madison students pick relevant coursework. Combines Madgrades and Rate My Professor data with FAISS vector search to recommend classes better than the default course selector.
-            </p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">FAISS embeddings</span>
-              <span class="tag">RAG chatbot</span>
-              <span class="tag">Hackathon</span>
-            </div>
-            <a class="project-link" href="https://github.com/AlecBhamani1/MadData2025" target="_blank" rel="noreferrer">View repository</a>
-          </article>
-
-          <article class="project-card">
-            <div class="project-top">
-              <div>
-                <h3>Logistic Regression ML Project</h3>
-                <div class="repo-name">Machine-Project-Logisitic-Regression</div>
-              </div>
-              <span class="project-number">04</span>
-            </div>
-            <p>
-              Machine learning project that splits user/log data into train and test sets, trains a logistic regression classifier, and tunes it to reach over 75 percent accuracy.
-            </p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">Machine learning</span>
-              <span class="tag">Logistic regression</span>
-            </div>
-            <a class="project-link" href="https://github.com/AlecBhamani1/Machine-Project-Logisitic-Regression" target="_blank" rel="noreferrer">View repository</a>
-          </article>
-
-          <article class="project-card">
-            <div class="project-top">
-              <div>
-                <h3>Weather App</h3>
-                <div class="repo-name">python-weather</div>
-              </div>
-              <span class="project-number">05</span>
-            </div>
-            <p>
-              Flask weather application for city search with current conditions, humidity, wind speed, and short-term forecasts pulled from the OpenWeatherMap API, wrapped in a clean responsive UI.
-            </p>
-            <div class="tags">
-              <span class="tag">Flask</span>
-              <span class="tag">HTML/CSS/JS</span>
-              <span class="tag">API integration</span>
-            </div>
-            <a class="project-link" href="https://github.com/AlecBhamani1/python-weather" target="_blank" rel="noreferrer">View repository</a>
-          </article>
-        </div>
-
-      </section>
-    </main>
-
-    <footer>
-      <div class="footer-inner">
-        <span>Alec Bhamani | Data science, AI prediction models, and analytics</span>
-        <a href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noreferrer">Download resume</a>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
+        <a class="nav-cta" href="mailto:alecbhamani8@gmail.com">Email me</a>
       </div>
-    </footer>
-  </div>
+    </nav>
+  </header>
 
-  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
-  <script>
-    // Geographically accurate connected-world globe, anchored to the left.
-    // Real coastlines (Natural Earth 110m) drawn with a d3-geo orthographic
-    // projection, glowing city lights at real coordinates, and animated
-    // "internet connection" arcs. Motion stays on the globe — nothing drifts
-    // across the screen. Falls back to a plain dark backdrop if assets fail.
-    (function () {
-      const canvas = document.getElementById("globe-canvas");
-      const ctx = canvas.getContext("2d");
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  <main id="main">
+    <section class="hero shell" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span aria-hidden="true"></span> Data science · ML · Analytics</p>
+        <h1 id="hero-title">I build data systems that turn noisy inputs into <em>useful decisions.</em></h1>
+        <p class="hero-intro">
+          I’m Alec, a data science student at UW–Madison. I build predictive models, machine-learning systems, and practical automations with a focus on how the work gets used—not just how it scores.
+        </p>
 
-      const TILT = -22;        // degrees; tilts the view slightly north (like the reference)
-      const START_LON = -12;   // initial center longitude — Europe / Africa facing us
-      const SPIN = 3.2;        // degrees per second — slow, contained rotation
+        <div class="hero-actions" role="group" aria-label="Featured actions">
+          <a class="button button-primary" href="#projects">See selected work <span aria-hidden="true">↓</span></a>
+          <a class="button button-secondary" href="mailto:alecbhamani8@gmail.com">Start a conversation <span aria-hidden="true">↗</span></a>
+        </div>
 
-      // Real coordinates [longitude, latitude] of major world cities.
-      const CITIES = [
-        [-74.0, 40.7], [-118.2, 34.0], [-87.6, 41.8], [-79.4, 43.7], [-99.1, 19.4],
-        [-46.6, -23.5], [-58.4, -34.6], [-0.12, 51.5], [2.35, 48.85], [-3.7, 40.4],
-        [13.4, 52.5], [12.5, 41.9], [37.6, 55.75], [28.98, 41.0], [31.24, 30.05],
-        [3.39, 6.45], [28.05, -26.2], [36.82, -1.29], [55.27, 25.2], [72.88, 19.07],
-        [77.21, 28.6], [103.82, 1.35], [100.5, 13.75], [114.17, 22.3], [121.47, 31.23],
-        [116.4, 39.9], [139.69, 35.69], [126.98, 37.57], [151.21, -33.87], [106.85, -6.21]
-      ];
+        <nav class="social-links" aria-label="Professional profiles">
+          <a href="https://github.com/AlecBhamani1" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/alec-bhamani-528b13361/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
 
-      let width = 0, height = 0, cx = 0, cy = 0, R = 0;
-      let projection = null, path = null;
-      let geoFill = null, geoCoast = null, geoBorders = null, graticule = null;
-      let ready = false;
-      let cityState = [];
-      let travelers = [];
-      let sparks = [];
-      let animationFrame = 0;
-      let lastTime = null;
+      <div class="hero-visual" role="img" aria-label="Portrait of Alec Bhamani with a connected-world motif">
+        <div class="globe" aria-hidden="true">
+          <span class="globe-line globe-line-one"></span>
+          <span class="globe-line globe-line-two"></span>
+          <span class="globe-line globe-line-three"></span>
+          <span class="orbit orbit-one"></span>
+          <span class="orbit orbit-two"></span>
+          <span class="city city-one"></span>
+          <span class="city city-two"></span>
+          <span class="city city-three"></span>
+          <span class="city city-four"></span>
+        </div>
 
-      function randomBetween(min, max) { return min + Math.random() * (max - min); }
+        <div class="portrait-card">
+          <picture>
+            <img
+              src="assets/alec-bhamani-photo-square-400.webp"
+              srcset="assets/alec-bhamani-photo-square-240.webp 240w, assets/alec-bhamani-photo-square-400.webp 400w, assets/alec-bhamani-photo-square-602.webp 602w"
+              sizes="(max-width: 520px) 175px, (max-width: 800px) 210px, (max-width: 980px) 256px, 300px"
+              width="602"
+              height="602"
+              alt="Alec Bhamani"
+              fetchpriority="high">
+          </picture>
+          <div class="portrait-label">
+            <span class="availability-dot" aria-hidden="true"></span>
+            Open to 2026–27 data and ML internships
+          </div>
+        </div>
+      </div>
+    </section>
 
-      function buildExtras() {
-        cityState = CITIES.map(function () { return { tw: Math.random() * Math.PI * 2 }; });
-        travelers = [];
-        for (let i = 0; i < 8; i += 1) travelers.push(makeTraveler(i * 420));
-        sparks = [];
-        for (let i = 0; i < 16; i += 1) {
-          sparks.push({
-            x: randomBetween(0.62, 0.98),
-            y: randomBetween(0.16, 0.92),
-            s: randomBetween(2.5, 5.5),
-            a: randomBetween(0.05, 0.22)
-          });
-        }
-      }
+    <section class="proof-strip" aria-label="At a glance">
+      <div class="shell proof-grid">
+        <div class="proof-item">
+          <strong>UW–Madison</strong>
+          <span>B.S. Data Science</span>
+        </div>
+        <div class="proof-item">
+          <strong>1st place</strong>
+          <span>Predictive modeling</span>
+        </div>
+        <div class="proof-item">
+          <strong>3 featured builds</strong>
+          <span>ML, LLMs &amp; retrieval</span>
+        </div>
+        <div class="proof-item">
+          <strong>May 2028</strong>
+          <span>Expected graduation</span>
+        </div>
+      </div>
+    </section>
 
-      // Angular length of a hop, in radians (0..PI) — used to pace each hop.
-      function geoDist(a, b) {
-        return (typeof d3 !== "undefined" && d3.geoDistance) ? d3.geoDistance(a, b) : 1;
-      }
+    <section class="section shell" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow section-eyebrow"><span aria-hidden="true"></span> Selected work</p>
+          <h2 id="projects-title">Three projects. Clear problems, methods, and evidence.</h2>
+        </div>
+        <p>
+          I’m most interested in technical work that changes a real decision. These projects span retail prediction, language-model engineering, and retrieval-based recommendations.
+        </p>
+      </div>
 
-      // A traveler never disappears: it rides one arc, then bounces on to the
-      // next city, hop after hop. Longer hops take a little longer to cross.
-      function hopDur(a, b) {
-        return 1500 + (geoDist(CITIES[a], CITIES[b]) / Math.PI) * 2400;
-      }
+      <div class="case-studies">
+        <article class="case-study case-study-featured">
+          <div class="case-content">
+            <div class="case-meta">
+              <span>01</span>
+              <span>Predictive modeling · Team of four</span>
+            </div>
+            <h3>Crystal Farms &amp; Cub Foods promotion model</h3>
+            <p class="case-lede">
+              Finding promotional windows where discounts could improve profitability—not just lift unit sales.
+            </p>
 
-      function makeTraveler(delay) {
-        const from = (Math.random() * CITIES.length) | 0;
-        let to = (Math.random() * CITIES.length) | 0;
-        if (to === from) to = (to + 1) % CITIES.length;
-        return { from: from, to: to, start: -delay, dur: hopDur(from, to),
-                 prevFrom: -1, prevTo: -1, prevEnd: -1e9 };
-      }
+            <dl class="case-facts">
+              <div>
+                <dt>My contribution</dt>
+                <dd>Collaborated on the Python modeling workflow and the analysis of historical retail sales data.</dd>
+              </div>
+              <div>
+                <dt>Approach</dt>
+                <dd>Converted historical sales patterns into predicted promotional windows the team could compare and present.</dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <dd>First-place project at the UW–Madison Tech Exploration Lab.</dd>
+              </div>
+            </dl>
 
-      // Pick the next stop, preferring cities on the near side of the globe so
-      // the connection keeps bouncing across what the viewer can actually see.
-      function pickNext(from, center) {
-        const visible = [];
-        for (let i = 0; i < CITIES.length; i += 1) {
-          if (i === from) continue;
-          if (Math.cos(geoDist(CITIES[i], center)) > 0.12) visible.push(i);
-        }
-        const pool = visible.length ? visible : CITIES.map(function (_, i) { return i; });
-        let next = pool[(Math.random() * pool.length) | 0];
-        if (next === from) next = (from + 1) % CITIES.length;
-        return next;
-      }
+            <div class="tech-list">
+              <span>Python</span><span>Predictive modeling</span><span>Sales analytics</span>
+            </div>
+            <a class="text-link" href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noopener noreferrer">View résumé evidence <span aria-hidden="true">↗</span></a>
+          </div>
 
-      function resizeCanvas() {
-        const ratio = Math.min(window.devicePixelRatio || 1, 2);
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = Math.floor(width * ratio);
-        canvas.height = Math.floor(height * ratio);
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+          <div class="case-visual retail-visual" role="img" aria-label="Diagram showing historical sales transformed into profitable promotion windows">
+            <div class="visual-label">Model workflow</div>
+            <div class="chart-grid" aria-hidden="true">
+              <div class="chart-bar chart-bar-1"></div>
+              <div class="chart-bar chart-bar-2"></div>
+              <div class="chart-bar chart-bar-3 chart-bar-accent"></div>
+              <div class="chart-bar chart-bar-4"></div>
+              <div class="chart-bar chart-bar-5"></div>
+              <div class="chart-bar chart-bar-6 chart-bar-accent"></div>
+              <div class="chart-bar chart-bar-7"></div>
+            </div>
+            <div class="workflow">
+              <span>Sales history</span><b aria-hidden="true">→</b><span>Model</span><b aria-hidden="true">→</b><span>Promo window</span>
+            </div>
+            <div class="award-chip"><span aria-hidden="true">★</span> 1st place</div>
+          </div>
+        </article>
 
-        const compact = width < 760;
-        R = compact
-          ? Math.min(width * 0.46, height * 0.34)
-          : Math.min(width * 0.30, height * 0.46, 460);
-        cx = compact ? width * 0.5 : width * 0.17;
-        cy = compact ? height * 0.32 : height * 0.5;
+        <article class="case-study">
+          <div class="case-content">
+            <div class="case-meta">
+              <span>02</span>
+              <span>Language models · Independent build</span>
+            </div>
+            <h3>Decoder-only GPT training stack</h3>
+            <p class="case-lede">
+              A transparent language-model pipeline for learning what sits beneath a chat interface.
+            </p>
 
-        if (projection) projection.scale(R).translate([cx, cy]);
-        if (!sparks.length) buildExtras();
-      }
+            <dl class="case-facts">
+              <div>
+                <dt>Build</dt>
+                <dd>Implemented and extended a decoder-only transformer from first principles, following an educational GPT architecture.</dd>
+              </div>
+              <div>
+                <dt>Engineering</dt>
+                <dd>Added pretraining, chat fine-tuning, evaluation, KV-cache generation, checkpoint recovery, and Ollama export.</dd>
+              </div>
+              <div>
+                <dt>Verified scale</dt>
+                <dd>Documented presets at approximately 7M, 30M, and 124M parameters for laptop and GPU workflows.</dd>
+              </div>
+            </dl>
 
-      function quad(p0, p1, cxp, cyp, u) {
-        const m = 1 - u;
-        return {
-          x: m * m * p0[0] + 2 * m * u * cxp + u * u * p1[0],
-          y: m * m * p0[1] + 2 * m * u * cyp + u * u * p1[1]
-        };
-      }
+            <div class="tech-list">
+              <span>PyTorch</span><span>Causal attention</span><span>KV cache</span><span>NLP</span>
+            </div>
+            <a class="text-link" href="https://github.com/AlecBhamani1/GPT" target="_blank" rel="noopener noreferrer">Explore the code <span aria-hidden="true">↗</span></a>
+          </div>
 
-      // Draw one connection arc (lifting off the surface). When withPacket is
-      // true, a glowing packet rides along it at position t (0..1). The arc
-      // stays lit for the whole hop and only dims as an endpoint nears the limb.
-      function drawArc(ai, bi, center, t, intensity, withPacket) {
-        const ca = CITIES[ai], cb = CITIES[bi];
-        const fa = Math.cos(d3.geoDistance(ca, center));
-        const fb = Math.cos(d3.geoDistance(cb, center));
-        if (fa <= 0.02 || fb <= 0.02) return;
+          <div class="case-visual terminal-visual" role="img" aria-label="Technical summary of the GPT project">
+            <div class="terminal-top" aria-hidden="true"><i></i><i></i><i></i><span>train.py</span></div>
+            <div class="terminal-body">
+              <p><span class="code-muted">preset</span> <span class="code-value">gpt2</span></p>
+              <p><span class="code-muted">layers</span> <span class="code-value">12</span></p>
+              <p><span class="code-muted">heads</span> <span class="code-value">12</span></p>
+              <p><span class="code-muted">context</span> <span class="code-value">1024</span></p>
+              <div class="attention-map" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <p class="terminal-status"><span aria-hidden="true">●</span> causal mask · KV cache · checkpointing</p>
+            </div>
+          </div>
+        </article>
 
-        const pa = projection(ca), pb = projection(cb);
-        const mx = (pa[0] + pb[0]) / 2, my = (pa[1] + pb[1]) / 2;
-        const ddx = mx - cx, ddy = my - cy;
-        const lift = 1 + 0.22 + Math.hypot(pa[0] - pb[0], pa[1] - pb[1]) / (R * 7);
-        const ctrlX = cx + ddx * lift, ctrlY = cy + ddy * lift;
-        const fade = Math.min(1, fa / 0.18) * Math.min(1, fb / 0.18) * intensity;
+        <article class="case-study">
+          <div class="case-content">
+            <div class="case-meta">
+              <span>03</span>
+              <span>MadData 2025 · Hackathon</span>
+            </div>
+            <h3>BadgerBot course advisor</h3>
+            <p class="case-lede">
+              Helping UW–Madison students move from a broad course catalog to recommendations grounded in their degree path.
+            </p>
 
-        ctx.strokeStyle = "rgba(243, 158, 80, " + (0.34 * fade) + ")";
-        ctx.lineWidth = 1.1;
-        ctx.beginPath();
-        ctx.moveTo(pa[0], pa[1]);
-        ctx.quadraticCurveTo(ctrlX, ctrlY, pb[0], pb[1]);
-        ctx.stroke();
+            <dl class="case-facts">
+              <div>
+                <dt>Problem</dt>
+                <dd>Course search is fragmented across requirements, grade histories, instructor data, and catalog descriptions.</dd>
+              </div>
+              <div>
+                <dt>Approach</dt>
+                <dd>Combined course and degree data with FAISS retrieval and ranking to surface more relevant options.</dd>
+              </div>
+              <div>
+                <dt>Deliverable</dt>
+                <dd>A hackathon prototype with a Flask interface, retrieval pipeline, and recommendation-oriented chatbot.</dd>
+              </div>
+            </dl>
 
-        if (!withPacket) return;
+            <div class="tech-list">
+              <span>Python</span><span>FAISS</span><span>Retrieval</span><span>Flask</span>
+            </div>
+            <a class="text-link" href="https://github.com/AlecBhamani1/MadData2025" target="_blank" rel="noopener noreferrer">Explore the code <span aria-hidden="true">↗</span></a>
+          </div>
 
-        const head = quad(pa, pb, ctrlX, ctrlY, t);
-        const tail = quad(pa, pb, ctrlX, ctrlY, Math.max(0, t - 0.12));
-        const grad = ctx.createLinearGradient(tail.x, tail.y, head.x, head.y);
-        grad.addColorStop(0, "rgba(255, 190, 100, 0)");
-        grad.addColorStop(1, "rgba(255, 214, 150, " + (0.95 * fade) + ")");
-        ctx.strokeStyle = grad; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(tail.x, tail.y); ctx.lineTo(head.x, head.y); ctx.stroke();
+          <div class="case-visual advisor-visual" role="img" aria-label="Architecture summary of the BadgerBot course advisor">
+            <div class="visual-label">Retrieval flow</div>
+            <div class="data-sources">
+              <span>Courses</span><span>Grades</span><span>Degree rules</span>
+            </div>
+            <div class="flow-line" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="retrieval-core">
+              <small>Vector search</small>
+              <strong>FAISS</strong>
+              <span>rank + retrieve</span>
+            </div>
+            <div class="recommendation-card">
+              <span class="recommendation-icon" aria-hidden="true">B</span>
+              <p><strong>Relevant courses</strong><br>matched to goals and requirements</p>
+            </div>
+          </div>
+        </article>
+      </div>
 
-        ctx.fillStyle = "rgba(255, 226, 170, " + fade + ")";
-        ctx.beginPath(); ctx.arc(head.x, head.y, 2.2, 0, Math.PI * 2); ctx.fill();
-      }
+      <div class="more-work">
+        <p>Earlier builds and coursework are available on GitHub, including logistic regression and a Flask weather application.</p>
+        <a class="text-link" href="https://github.com/AlecBhamani1?tab=repositories" target="_blank" rel="noopener noreferrer">Browse all repositories <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
 
-      function drawGlobe(elapsed) {
-        ctx.clearRect(0, 0, width, height);
+    <section class="section capability-section" aria-labelledby="capabilities-title">
+      <div class="shell">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow section-eyebrow"><span aria-hidden="true"></span> Working toolkit</p>
+            <h2 id="capabilities-title">Skills tied to the work.</h2>
+          </div>
+          <p>Tools matter most in context. These are the methods I’ve used across projects, coursework, and consulting work.</p>
+        </div>
 
-        // Static "+" marks on the right (these never move).
-        sparks.forEach(function (p) {
-          const x = p.x * width, y = p.y * height;
-          ctx.strokeStyle = "rgba(233, 162, 63, " + p.a + ")";
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(x - p.s, y); ctx.lineTo(x + p.s, y);
-          ctx.moveTo(x, y - p.s); ctx.lineTo(x, y + p.s);
-          ctx.stroke();
-        });
+        <div class="capability-grid">
+          <article>
+            <span class="capability-number">01</span>
+            <h3>Model development</h3>
+            <p>Python, PyTorch, regression, clustering, model evaluation, and experiment design.</p>
+          </article>
+          <article>
+            <span class="capability-number">02</span>
+            <h3>Data &amp; retrieval</h3>
+            <p>Pandas, NumPy, R, FAISS, statistical analysis, feature preparation, and ranking.</p>
+          </article>
+          <article>
+            <span class="capability-number">03</span>
+            <h3>Product delivery</h3>
+            <p>Flask, APIs, Git, Java, workflow automation, technical documentation, and team collaboration.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        // Atmosphere glow.
-        const glow = ctx.createRadialGradient(cx, cy, R * 0.82, cx, cy, R * 1.45);
-        glow.addColorStop(0, "rgba(233, 162, 63, 0.14)");
-        glow.addColorStop(0.55, "rgba(216, 120, 50, 0.06)");
-        glow.addColorStop(1, "rgba(233, 162, 63, 0)");
-        ctx.fillStyle = glow;
-        ctx.beginPath(); ctx.arc(cx, cy, R * 1.45, 0, Math.PI * 2); ctx.fill();
+    <section class="section shell" id="experience" aria-labelledby="experience-title">
+      <div class="section-heading compact-heading">
+        <div>
+          <p class="eyebrow section-eyebrow"><span aria-hidden="true"></span> Experience</p>
+          <h2 id="experience-title">Technical curiosity with operational context.</h2>
+        </div>
+        <p>My background spans consulting, service leadership, and project delivery—the settings that taught me to make technical work clear and usable.</p>
+      </div>
 
-        // Ocean sphere, lit from the upper-left.
-        const body = ctx.createRadialGradient(cx - R * 0.38, cy - R * 0.42, R * 0.05, cx, cy, R * 1.02);
-        body.addColorStop(0, "rgba(32, 27, 21, 1)");
-        body.addColorStop(0.55, "rgba(14, 15, 18, 1)");
-        body.addColorStop(1, "rgba(6, 7, 9, 1)");
-        ctx.fillStyle = body;
-        ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+      <div class="experience-layout">
+        <div class="timeline">
+          <article class="timeline-item">
+            <div class="timeline-date">2025—Now</div>
+            <div>
+              <h3>Associate Consultant <span>· Krahnborn</span></h3>
+              <p>Contribute to data-driven solutions and automation strategies, using AI tooling and analysis to reduce manual work and improve deliverable accuracy.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-date">2024—2025</div>
+            <div>
+              <h3>Bar Manager &amp; Catering Staff <span>· Wisconsin Union</span></h3>
+              <p>Promoted into leadership and coordinated staff for high-volume university venues and events.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-date">2020—2022</div>
+            <div>
+              <h3>Jr. Project Engineer <span>· Blue Lynk</span></h3>
+              <p>Delivered 20+ interactive document projects for public and private clients while meeting cloud-based quality standards.</p>
+            </div>
+          </article>
+        </div>
 
-        if (ready) {
-          const lon = START_LON + (elapsed / 1000) * SPIN;
-          projection.rotate([lon, TILT, 0]);
+        <aside class="education-card" aria-label="Education">
+          <div class="education-mark" aria-hidden="true">W</div>
+          <p class="education-label">Education</p>
+          <h3>University of Wisconsin–Madison</h3>
+          <p>Bachelor of Science<br>Data Science</p>
+          <div class="education-footer">
+            <span>Expected May 2028</span>
+            <span>Madison, WI</span>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-          // Graticule (faint globe grid).
-          ctx.beginPath(); path(graticule);
-          ctx.strokeStyle = "rgba(150, 168, 162, 0.07)";
-          ctx.lineWidth = 0.6; ctx.stroke();
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="shell contact-inner">
+        <div>
+          <p class="eyebrow section-eyebrow"><span aria-hidden="true"></span> Let’s connect</p>
+          <h2 id="contact-title">Looking for someone who can connect models to the decisions around them?</h2>
+        </div>
+        <div class="contact-actions">
+          <p>I’m open to data science, machine-learning, and analytics internship conversations for 2026–27.</p>
+          <a class="button button-primary" href="mailto:alecbhamani8@gmail.com">Email Alec <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noopener noreferrer">View résumé <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-          // Land fill (real continents).
-          ctx.beginPath(); path(geoFill);
-          ctx.fillStyle = "rgba(48, 42, 32, 0.92)";
-          ctx.fill();
-
-          // Country borders (faint).
-          ctx.beginPath(); path(geoBorders);
-          ctx.strokeStyle = "rgba(233, 162, 63, 0.12)";
-          ctx.lineWidth = 0.5; ctx.stroke();
-
-          // Coastlines (amber glow).
-          ctx.beginPath(); path(geoCoast);
-          ctx.strokeStyle = "rgba(240, 165, 78, 0.42)";
-          ctx.lineWidth = 0.9; ctx.stroke();
-
-          const rot = projection.rotate();
-          const center = [-rot[0], -rot[1]];
-
-          // City lights.
-          for (let i = 0; i < CITIES.length; i += 1) {
-            const front = Math.cos(d3.geoDistance(CITIES[i], center));
-            if (front <= 0.04) continue;
-            const p = projection(CITIES[i]);
-            const twinkle = 0.62 + 0.38 * Math.sin(elapsed * 0.002 + cityState[i].tw);
-            const aa = (0.3 + 0.7 * front) * twinkle;
-            const r = 1.0 + 1.1 * front;
-            const g = ctx.createRadialGradient(p[0], p[1], 0, p[0], p[1], r * 4);
-            g.addColorStop(0, "rgba(255, 198, 112, " + aa + ")");
-            g.addColorStop(0.5, "rgba(233, 140, 52, " + (aa * 0.42) + ")");
-            g.addColorStop(1, "rgba(233, 140, 52, 0)");
-            ctx.fillStyle = g;
-            ctx.beginPath(); ctx.arc(p[0], p[1], r * 4, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = "rgba(255, 226, 170, " + Math.min(1, aa + 0.18) + ")";
-            ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.6, 0, Math.PI * 2); ctx.fill();
-          }
-
-          // Connections that keep bouncing place to place — each traveler rides
-          // an arc, then hops on to the next city without ever vanishing.
-          for (let i = 0; i < travelers.length; i += 1) {
-            const tr = travelers[i];
-            let t = (elapsed - tr.start) / tr.dur;
-
-            // Advance through any hops that completed since the last frame.
-            let guard = 0;
-            while (t >= 1 && guard < 6) {
-              tr.prevFrom = tr.from; tr.prevTo = tr.to; tr.prevEnd = tr.start + tr.dur;
-              tr.from = tr.to;
-              tr.to = pickNext(tr.from, center);
-              tr.start += tr.dur;
-              tr.dur = hopDur(tr.from, tr.to);
-              t = (elapsed - tr.start) / tr.dur;
-              guard += 1;
-            }
-            if (t >= 1) { tr.start = elapsed; t = 0; }  // resync after a long pause
-            if (t < 0) continue;                        // still in its start delay
-
-            // Brief afterglow of the hop just finished, so the path feels linked.
-            const since = elapsed - tr.prevEnd;
-            if (tr.prevFrom >= 0 && since < 520) {
-              drawArc(tr.prevFrom, tr.prevTo, center, 1, (1 - since / 520) * 0.5, false);
-            }
-
-            drawArc(tr.from, tr.to, center, t, 1, true);
-          }
-        }
-
-        // Bright rim crescent (top atmosphere highlight).
-        ctx.save();
-        ctx.beginPath(); ctx.arc(cx, cy, R, Math.PI * 0.86, Math.PI * 1.7);
-        ctx.strokeStyle = "rgba(214, 226, 222, 0.42)";
-        ctx.lineWidth = 1.6;
-        ctx.shadowColor = "rgba(255, 236, 200, 0.5)"; ctx.shadowBlur = 14;
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      function loop(time) {
-        if (lastTime === null) lastTime = time;
-        lastTime = time;
-        drawGlobe(time);
-        animationFrame = requestAnimationFrame(loop);
-      }
-
-      function restartAnimation() {
-        cancelAnimationFrame(animationFrame);
-        lastTime = null;
-        resizeCanvas();
-        if (reducedMotion.matches) {
-          drawGlobe(0);   // static frame: Europe / Africa centered
-        } else {
-          animationFrame = requestAnimationFrame(loop);
-        }
-      }
-
-      function init() {
-        try {
-          if (typeof d3 === "undefined" || typeof topojson === "undefined") return;
-          fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
-            .then(function (r) { return r.json(); })
-            .then(function (world) {
-              const obj = world.objects.countries;
-              geoFill = topojson.merge(world, obj.geometries);
-              geoCoast = topojson.mesh(world, obj, function (a, b) { return a === b; });
-              geoBorders = topojson.mesh(world, obj, function (a, b) { return a !== b; });
-              graticule = d3.geoGraticule10();
-              projection = d3.geoOrthographic().clipAngle(90).precision(0.5)
-                .scale(R).translate([cx, cy]);
-              path = d3.geoPath(projection, ctx);
-              ready = true;
-              restartAnimation();
-            })
-            .catch(function () { /* keep the plain dark backdrop */ });
-        } catch (e) { /* keep the plain dark backdrop */ }
-      }
-
-      window.addEventListener("resize", restartAnimation);
-      reducedMotion.addEventListener("change", restartAnimation);
-      resizeCanvas();
-      restartAnimation();   // draw ocean + sparks immediately while coastlines load
-      init();
-    })();
-  </script>
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <div>
+        <a class="brand footer-brand" href="#top">
+          <span class="brand-mark" aria-hidden="true">AB</span>
+          <span class="brand-name">Alec Bhamani</span>
+        </a>
+        <p>Data science, machine learning, and practical automation.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="mailto:alecbhamani8@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/alec-bhamani-528b13361/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/AlecBhamani1" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="assets/alec-bhamani-resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
+      </nav>
+      <p class="copyright">© 2026 Alec Bhamani</p>
+    </div>
+  </footer>
 </body>
 </html>
