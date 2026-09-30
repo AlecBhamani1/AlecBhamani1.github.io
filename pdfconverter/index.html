@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free PDF combiner: merge two or more PDFs and rearrange their pages right in your browser. Files never leave your computer.">
+<link rel="canonical" href="https://alecbhamani.com/pdfconverter/">
+<title>PDF Combiner | Alec Bhamani</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23080b0d'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial,sans-serif' font-size='24' font-weight='700' fill='%23f0a84a'%3EAB%3C/text%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --panel: #ffffff;
+    --text: #1c1f24;
+    --muted: #6b7280;
+    --border: #e2e5ea;
+    --accent: #2563eb;
+    --accent-text: #ffffff;
+    --accent-soft: #e8efff;
+    --danger: #dc2626;
+    --shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111317;
+      --panel: #1a1d23;
+      --text: #e8eaed;
+      --muted: #9aa1ab;
+      --border: #2c313a;
+      --accent: #4f8cff;
+      --accent-text: #0b1020;
+      --accent-soft: #1d2a45;
+      --danger: #f87171;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 120px; }
+  h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  .home { display: inline-block; color: var(--muted); font-size: 14px; text-decoration: none; margin-bottom: 16px; }
+  .home:hover { color: var(--accent); }
+  h2 { font-size: 15px; margin: 0; }
+  button { font: inherit; cursor: pointer; }
+  button:disabled { cursor: not-allowed; opacity: .45; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .hint { color: var(--muted); font-size: 13px; }
+
+  /* Drop zone */
+  #drop {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 36px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  #drop:hover, #drop.over { border-color: var(--accent); background: var(--accent-soft); }
+  #drop strong { display: block; font-size: 17px; margin-bottom: 4px; }
+  #drop span { color: var(--muted); font-size: 14px; }
+
+  /* File list */
+  #files { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+  #files:empty { display: none; }
+  .file {
+    display: flex; align-items: center; gap: 12px;
+    border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px;
+  }
+  .badge {
+    flex: none; width: 28px; height: 28px; border-radius: 7px;
+    display: grid; place-items: center;
+    color: #fff; font-weight: 700; font-size: 13px;
+  }
+  .file .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file .count { color: var(--muted); font-size: 13px; white-space: nowrap; }
+  .icon-btn {
+    border: 1px solid var(--border); background: transparent; color: var(--text);
+    width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; padding: 0;
+  }
+  .icon-btn:hover:not(:disabled) { background: var(--accent-soft); }
+  .icon-btn.remove:hover:not(:disabled) { color: var(--danger); border-color: var(--danger); background: transparent; }
+
+  /* Order toggle */
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 9px; padding: 3px; gap: 3px; }
+  .seg button {
+    border: 0; background: transparent; color: var(--muted);
+    padding: 6px 14px; border-radius: 6px; font-size: 14px;
+  }
+  .seg button.active { background: var(--accent); color: var(--accent-text); }
+
+  /* Page grid */
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 14px;
+  }
+  .page {
+    position: relative;
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--panel);
+    padding: 8px 8px 6px;
+    cursor: grab;
+    user-select: none;
+    border-top-width: 4px;
+  }
+  .page:active { cursor: grabbing; }
+  .thumb {
+    aspect-ratio: 8.5 / 11;
+    display: grid; place-items: center;
+    background: var(--bg); border-radius: 4px; overflow: hidden;
+  }
+  .thumb img { max-width: 100%; max-height: 100%; display: block; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
+  .thumb .loading { color: var(--muted); font-size: 12px; }
+  .meta { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; font-size: 12px; }
+  .pos { font-weight: 700; }
+  .src { color: var(--muted); }
+  .tools {
+    position: absolute; top: 6px; right: 6px; left: 6px;
+    display: flex; justify-content: space-between;
+    opacity: 0; transition: opacity .12s;
+  }
+  .page:hover .tools, .page:focus-within .tools { opacity: 1; }
+  @media (hover: none) { .tools { opacity: 1; } }
+  .tools .group { display: flex; gap: 4px; }
+  .tools button {
+    width: 26px; height: 26px; border-radius: 6px; padding: 0;
+    border: 1px solid var(--border); background: var(--panel); color: var(--text);
+    display: grid; place-items: center; font-size: 13px;
+    box-shadow: var(--shadow);
+  }
+  .tools button:hover:not(:disabled) { border-color: var(--accent); }
+  .tools button.remove:hover { border-color: var(--danger); color: var(--danger); }
+  .sortable-ghost { opacity: .35; }
+  .sortable-chosen { box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+  .empty { color: var(--muted); text-align: center; padding: 28px 0; }
+
+  /* Combine bar */
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: var(--panel); border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+  }
+  .bar-inner {
+    max-width: 1100px; margin: 0 auto; padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .bar label { color: var(--muted); font-size: 14px; }
+  .bar input {
+    font: inherit; padding: 8px 10px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--text);
+    width: 220px; max-width: 100%;
+  }
+  #status { flex: 1; min-width: 160px; color: var(--muted); font-size: 14px; }
+  #status.error { color: var(--danger); }
+  #combine {
+    border: 0; border-radius: 9px; padding: 11px 28px;
+    background: var(--accent); color: var(--accent-text);
+    font-weight: 600; font-size: 16px;
+  }
+  #combine:hover:not(:disabled) { filter: brightness(1.08); }
+  .secondary {
+    border: 1px solid var(--border); background: transparent; color: var(--text);
+    border-radius: 8px; padding: 6px 12px; font-size: 14px;
+  }
+  .secondary:hover:not(:disabled) { background: var(--accent-soft); }
+</style>
+</head>
+<body>
+<main>
+  <a class="home" href="/">← alecbhamani.com</a>
+  <h1>PDF Combiner</h1>
+  <p class="sub">Add two or more PDFs, arrange the pages if you like, then hit Combine. Your files stay on your computer; nothing is uploaded.</p>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>1. Add PDFs</h2>
+      <span class="hint">Use the arrows to change file order</span>
+    </div>
+    <div id="drop" tabindex="0" role="button" aria-label="Choose PDF files">
+      <strong>Drop PDFs here or click to browse</strong>
+      <span>You can add more files at any time</span>
+    </div>
+    <input id="picker" type="file" accept="application/pdf,.pdf" multiple hidden>
+    <ul id="files"></ul>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>2. Page order</h2>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div class="seg" role="group" aria-label="Page order mode">
+          <button id="mode-default" class="active" type="button">Default order</button>
+          <button id="mode-custom" type="button">Custom order</button>
+        </div>
+      </div>
+    </div>
+    <p class="hint" id="order-hint" style="margin:-4px 0 14px">Default: every page of the first PDF, then every page of the next, and so on. Drag any page (or use its arrows) to switch to a custom order.</p>
+    <div id="grid"></div>
+    <div id="grid-empty" class="empty">Pages will appear here once you add PDFs.</div>
+  </section>
+</main>
+
+<div class="bar">
+  <div class="bar-inner">
+    <label for="outname">Save as</label>
+    <input id="outname" type="text" value="combined.pdf" spellcheck="false">
+    <span id="status">Add at least 2 PDFs to combine.</span>
+    <button id="combine" type="button" disabled>Combine</button>
+  </div>
+</div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+const COLORS = ["#2563eb", "#db2777", "#059669", "#d97706", "#7c3aed", "#0891b2", "#dc2626", "#65a30d"];
+const THUMB_WIDTH = 240; // px, rendered at 2x the displayed size for sharpness
+
+// files: loaded sources, in "default order" sequence.
+// pages: the output sequence, each entry pointing at a page of a file.
+let files = [];
+let pages = [];
+let customOrder = false;
+let nextFileId = 1;
+let nextColor = 0;
+const thumbs = new Map(); // "fileId:pageIndex" -> object URL
+
+const $ = (id) => document.getElementById(id);
+const drop = $("drop"), picker = $("picker"), fileList = $("files");
+const grid = $("grid"), gridEmpty = $("grid-empty");
+const combineBtn = $("combine"), statusEl = $("status"), outName = $("outname");
+const modeDefault = $("mode-default"), modeCustom = $("mode-custom");
+
+// ---------- Adding files ----------
+
+drop.addEventListener("click", () => picker.click());
+drop.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); picker.click(); }
+});
+picker.addEventListener("change", () => { addFiles(picker.files); picker.value = ""; });
+
+["dragenter", "dragover"].forEach((t) => drop.addEventListener(t, (e) => {
+  e.preventDefault(); drop.classList.add("over");
+}));
+["dragleave", "drop"].forEach((t) => drop.addEventListener(t, (e) => {
+  e.preventDefault(); drop.classList.remove("over");
+}));
+drop.addEventListener("drop", (e) => addFiles(e.dataTransfer.files));
+// Stop the browser from opening a PDF dropped anywhere else on the page.
+window.addEventListener("dragover", (e) => e.preventDefault());
+window.addEventListener("drop", (e) => e.preventDefault());
+
+async function addFiles(fileListLike) {
+  const incoming = [...fileListLike];
+  const pdfs = incoming.filter((f) => f.type === "application/pdf" || /\.pdf$/i.test(f.name));
+  const skipped = incoming.length - pdfs.length;
+  const failed = [];
+
+  for (const f of pdfs) {
+    setStatus(`Reading ${f.name}…`);
+    try {
+      const bytes = new Uint8Array(await f.arrayBuffer());
+      // pdf.js transfers the buffer to its worker, so give it a copy and keep the original for pdf-lib.
+      const doc = await pdfjsLib.getDocument({ data: bytes.slice() }).promise;
+      const file = {
+        id: nextFileId++,
+        name: f.name,
+        bytes,
+        doc,
+        pageCount: doc.numPages,
+        color: COLORS[nextColor++ % COLORS.length],
+      };
+      files.push(file);
+      for (let i = 0; i < file.pageCount; i++) pages.push({ fileId: file.id, pageIndex: i });
+      renderThumbs(file);
+    } catch (err) {
+      console.error(err);
+      failed.push(f.name + (err && err.name === "PasswordException" ? " (password protected)" : ""));
+    }
+  }
+
+  render();
+  const problems = [];
+  if (failed.length) problems.push(`Couldn't read: ${failed.join(", ")}`);
+  if (skipped) problems.push(`${skipped} non-PDF file${skipped > 1 ? "s" : ""} ignored`);
+  if (problems.length) setStatus(problems.join(". ") + ".", true);
+  else updateStatus();
+}
+
+async function renderThumbs(file) {
+  for (let i = 0; i < file.pageCount; i++) {
+    if (!files.includes(file)) return; // file removed mid-render
+    try {
+      const page = await file.doc.getPage(i + 1);
+      const base = page.getViewport({ scale: 1 });
+      const viewport = page.getViewport({ scale: THUMB_WIDTH / base.width });
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.ceil(viewport.width);
+      canvas.height = Math.ceil(viewport.height);
+      await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+      const blob = await new Promise((r) => canvas.toBlob(r));
+      const key = `${file.id}:${i}`;
+      thumbs.set(key, URL.createObjectURL(blob));
+      const img = grid.querySelector(`[data-key="${key}"] .thumb`);
+      if (img) img.innerHTML = `<img alt="" src="${thumbs.get(key)}">`;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+}
+
+// ---------- File list actions ----------
+
+function moveFile(index, delta) {
+  const j = index + delta;
+  if (j < 0 || j >= files.length) return;
+  [files[index], files[j]] = [files[j], files[index]];
+  if (!customOrder) pages = defaultPages();
+  render();
+}
+
+function removeFile(id) {
+  const file = files.find((f) => f.id === id);
+  files = files.filter((f) => f.id !== id);
+  pages = pages.filter((p) => p.fileId !== id);
+  for (let i = 0; i < file.pageCount; i++) {
+    const key = `${id}:${i}`;
+    if (thumbs.has(key)) { URL.revokeObjectURL(thumbs.get(key)); thumbs.delete(key); }
+  }
+  file.doc.destroy();
+  if (files.length === 0) customOrder = false;
+  render();
+}
+
+// ---------- Page order ----------
+
+function defaultPages() {
+  const out = [];
+  for (const f of files) for (let i = 0; i < f.pageCount; i++) out.push({ fileId: f.id, pageIndex: i });
+  return out;
+}
+
+function setCustom(on) {
+  customOrder = on;
+  if (!on) pages = defaultPages();
+  render();
+}
+
+modeDefault.addEventListener("click", () => {
+  if (customOrder && !confirm("Reset to default order? Your custom arrangement (and any removed pages) will be restored to the original sequence.")) return;
+  setCustom(false);
+});
+modeCustom.addEventListener("click", () => setCustom(true));
+
+function movePage(from, to) {
+  if (to < 0 || to >= pages.length || from === to) return;
+  const [p] = pages.splice(from, 1);
+  pages.splice(to, 0, p);
+  customOrder = true;
+  render();
+}
+
+function removePage(index) {
+  pages.splice(index, 1);
+  customOrder = true;
+  render();
+}
+
+Sortable.create(grid, {
+  animation: 150,
+  filter: ".tools button",
+  preventOnFilter: false,
+  onEnd: (e) => {
+    if (e.oldIndex === e.newIndex) return;
+    const [p] = pages.splice(e.oldIndex, 1);
+    pages.splice(e.newIndex, 0, p);
+    customOrder = true;
+    render();
+  },
+});
+
+// ---------- Rendering ----------
+
+function fileLetter(file) {
+  return String.fromCharCode(65 + files.indexOf(file)); // A, B, C… by current file order
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function render() {
+  // File list
+  fileList.innerHTML = files.map((f, i) => `
+    <li class="file">
+      <span class="badge" style="background:${f.color}">${fileLetter(f)}</span>
+      <span class="name" title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</span>
+      <span class="count">${f.pageCount} page${f.pageCount === 1 ? "" : "s"}</span>
+      <button class="icon-btn" data-act="up" data-i="${i}" ${i === 0 ? "disabled" : ""} aria-label="Move up">↑</button>
+      <button class="icon-btn" data-act="down" data-i="${i}" ${i === files.length - 1 ? "disabled" : ""} aria-label="Move down">↓</button>
+      <button class="icon-btn remove" data-act="remove" data-id="${f.id}" aria-label="Remove file">✕</button>
+    </li>`).join("");
+
+  // Page grid
+  const byId = new Map(files.map((f) => [f.id, f]));
+  grid.innerHTML = pages.map((p, i) => {
+    const f = byId.get(p.fileId);
+    const key = `${p.fileId}:${p.pageIndex}`;
+    const src = thumbs.get(key);
+    return `
+      <div class="page" data-key="${key}" style="border-top-color:${f.color}">
+        <div class="tools">
+          <div class="group">
+            <button data-act="left" data-i="${i}" ${i === 0 ? "disabled" : ""} aria-label="Move earlier" title="Move earlier">←</button>
+            <button data-act="right" data-i="${i}" ${i === pages.length - 1 ? "disabled" : ""} aria-label="Move later" title="Move later">→</button>
+          </div>
+          <button class="remove" data-act="drop" data-i="${i}" aria-label="Remove page" title="Leave this page out">✕</button>
+        </div>
+        <div class="thumb">${src ? `<img alt="" src="${src}">` : `<span class="loading">Loading…</span>`}</div>
+        <div class="meta">
+          <span class="pos">${i + 1}</span>
+          <span class="src" title="${escapeHtml(f.name)}">${fileLetter(f)} · p${p.pageIndex + 1}</span>
+        </div>
+      </div>`;
+  }).join("");
+  gridEmpty.style.display = pages.length ? "none" : "";
+  gridEmpty.textContent = files.length
+    ? "All pages have been removed. Click Default order to bring them back."
+    : "Pages will appear here once you add PDFs.";
+
+  modeDefault.classList.toggle("active", !customOrder);
+  modeCustom.classList.toggle("active", customOrder);
+  modeDefault.disabled = modeCustom.disabled = files.length === 0;
+
+  updateStatus();
+}
+
+fileList.addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-act]");
+  if (!b) return;
+  if (b.dataset.act === "up") moveFile(+b.dataset.i, -1);
+  if (b.dataset.act === "down") moveFile(+b.dataset.i, 1);
+  if (b.dataset.act === "remove") removeFile(+b.dataset.id);
+});
+
+grid.addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-act]");
+  if (!b) return;
+  const i = +b.dataset.i;
+  if (b.dataset.act === "left") movePage(i, i - 1);
+  if (b.dataset.act === "right") movePage(i, i + 1);
+  if (b.dataset.act === "drop") removePage(i);
+});
+
+function setStatus(msg, isError = false) {
+  statusEl.textContent = msg;
+  statusEl.classList.toggle("error", isError);
+}
+
+function updateStatus() {
+  const ready = files.length >= 2 && pages.length > 0;
+  combineBtn.disabled = !ready;
+  if (files.length < 2) setStatus(`Add at least 2 PDFs to combine${files.length ? " (1 added so far)" : ""}.`);
+  else if (!pages.length) setStatus("No pages selected.", true);
+  else setStatus(`${files.length} PDFs · ${pages.length} pages · ${customOrder ? "custom" : "default"} order`);
+}
+
+// ---------- Combine ----------
+
+function outputName() {
+  let name = outName.value.trim() || "combined.pdf";
+  name = name.replace(/[\\/:*?"<>|]/g, "_");
+  if (!/\.pdf$/i.test(name)) name += ".pdf";
+  return name;
+}
+
+async function combine() {
+  combineBtn.disabled = true;
+  setStatus("Combining…");
+  try {
+    const out = await PDFLib.PDFDocument.create();
+
+    // Copy every needed page from each source in a single call, so shared
+    // resources like fonts and images are only embedded once per source.
+    const copied = new Map(); // "fileId:pageIndex" -> copied PDFPage
+    for (const f of files) {
+      const indices = [...new Set(pages.filter((p) => p.fileId === f.id).map((p) => p.pageIndex))];
+      if (!indices.length) continue;
+      const src = await PDFLib.PDFDocument.load(f.bytes, { ignoreEncryption: true });
+      const copies = await out.copyPages(src, indices);
+      indices.forEach((idx, k) => copied.set(`${f.id}:${idx}`, copies[k]));
+    }
+    for (const p of pages) out.addPage(copied.get(`${p.fileId}:${p.pageIndex}`));
+
+    const bytes = await out.save();
+    const saved = await saveFile(new Blob([bytes], { type: "application/pdf" }), outputName());
+    if (saved) setStatus(`Done! Saved ${saved} (${pages.length} pages).`);
+    else updateStatus();
+  } catch (err) {
+    console.error(err);
+    setStatus(`Something went wrong: ${err.message || err}`, true);
+  } finally {
+    combineBtn.disabled = !(files.length >= 2 && pages.length > 0);
+  }
+}
+
+// Returns the saved file name, or null if the user cancelled.
+async function saveFile(blob, name) {
+  // Chrome/Edge: let the user pick the folder and name.
+  if (window.showSaveFilePicker) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: name,
+        types: [{ description: "PDF document", accept: { "application/pdf": [".pdf"] } }],
+      });
+      const w = await handle.createWritable();
+      await w.write(blob);
+      await w.close();
+      return handle.name;
+    } catch (err) {
+      if (err.name === "AbortError") return null;
+      console.warn("Save picker unavailable, falling back to download.", err);
+    }
+  }
+  // Everyone else: regular download.
+  const url = URL.createObjectURL(blob);
+  const a = Object.assign(document.createElement("a"), { href: url, download: name });
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+  return name;
+}
+
+combineBtn.addEventListener("click", combine);
+outName.addEventListener("keydown", (e) => { if (e.key === "Enter" && !combineBtn.disabled) combine(); });
+
+render();
+</script>
+</body>
+</html>
